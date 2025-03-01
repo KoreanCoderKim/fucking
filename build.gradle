@@ -12,6 +12,7 @@ targetCompatibility = '1.8'
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(17)
+		runtimeVersion = JavaRuntimeVersion.of(17)
 	}
 }
 configurations {

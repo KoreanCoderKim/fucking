@@ -1,0 +1,19 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/Modifying" method="post">
+        <input type="hidden" name="ModifyId" value="{{MI}}">
+        <label class="form-label">RoomId</label>
+        <textarea rows="3" name="roomId"></textarea><!-- 이게 핵심 -->
+        <label class="form-label">title</label>
+        <textarea rows="3" name="title"></textarea>
+        <label class="form-label">News</label>
+        <textarea rows="3" name="News"></textarea>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</body>
+</html>

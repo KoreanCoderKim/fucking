@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<header>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>다동게시판</title>
+</header>
+<style>
+    body {
+        background-color: black;
+        width: auto;
+        height: auto;
+        color: greenyellow;
+    }
+    footer {
+        background-color: black;
+        width: auto;
+        height: auto;
+        color: greenyellow;
+    }
+    header {
+        background-color: black;
+        width: auto;
+        height: auto;
+        color: greenyellow;
+    }
+    a {
+        color: greenyellow;
+        text-decoration-line: none;
+    }
+</style>
+<header>
+    <h1><a href="http://localhost:8080/new?RoomId={{Id}}">[작성하기]</h1></a>
+    <p>유저이름 | 제목 | 내용</p>
+</header>
+{{#Data}}
+    <div style="display: flex; align-items: center; gap: 10px;">
+        <p>{{usId}} | {{title}} | {{News}}</p>
+        <form method="post" action="/delete">
+            <input type="hidden" name="RoomId" value="{{roomId}}">  <!-- 이게 핵심 -->
+            <button type="submit" name="deleteId" value="{{id}}">[게시물 삭제] </button>
+        </form>
+        <a href="http://localhost:8080/Change?ModifyId={{id}}">수정하기</a>
+    </div>
+{{/Data}}
+<footer>
+    <a href="http://localhost:8080/Made">새로운 방 만들기</a><br>
+    <a href="http://localhost:8080/In">다른방으로 가기</a><br>
+</footer>
+</html>

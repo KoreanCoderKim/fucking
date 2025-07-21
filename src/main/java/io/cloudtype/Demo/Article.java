@@ -1,5 +1,5 @@
-package com.example.Article;
-import com.example.Article.ArticleDto;
+package io.cloudtype.Demo;
+import io.cloudtype.Demo.ArticleDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

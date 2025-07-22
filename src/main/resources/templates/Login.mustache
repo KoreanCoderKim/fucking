@@ -17,7 +17,7 @@
     <script>
         setInterval(() => {
             fetch("/Board2", {
-                method: "GET",
+                method: "POST",
                 credentials: "include" // 세션 쿠키 같이 보냄
             }).then(response => console.log("세션 연장됨"));
         }, 5 * 60 * 1000); // 5분마다

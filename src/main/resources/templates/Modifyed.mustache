@@ -2,18 +2,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
+    <title>게시글 수정</title>
 </head>
+<style>
+    body {
+        background-color: honeydew;
+    }
+    textarea {
+        background-color: antiquewhite;
+    }
+</style>
 <body>
+    <h1>수정하기</h1>
     <form action="/Modifying" method="post">
         <input type="hidden" name="ModifyId" value="{{MI}}">
-        <label class="form-label">RoomId</label>
-        <textarea rows="3" name="roomId"></textarea><!-- 이게 핵심 -->
-        <label class="form-label">title</label>
-        <textarea rows="3" name="title"></textarea>
-        <label class="form-label">News</label>
-        <textarea rows="3" name="News"></textarea>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <label class="form-label">방 번호</label>
+        <textarea rows="3" name="roomId"></textarea><br>
+        <label class="form-label">글 제목</label>
+        <textarea rows="3" name="title"></textarea><br>
+        <label class="form-label">글 내용</label>
+        <textarea rows="3" name="News"></textarea><br>
+        <button type="submit" class="btn btn-primary">제출하기</button>
     </form>
 </body>
 </html>

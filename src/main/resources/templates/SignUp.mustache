@@ -2,15 +2,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
+    <title>회원 가입</title>
 </head>
+<style>
+    body {
+        background-color: honeydew;
+    }
+    textarea {
+        background-color: antiquewhite;
+    }
+</style>
 <body>
+    <h1>회원가입</h1>
     <form action="/Board" method="post">
-        <p>userId</p><br>
+        <p>아이디</p><br>
         <textarea rows="3" name="userId"></textarea>
-        <p>password</p><br>
+        <p>비밀번호</p><br>
         <textarea rows="3" name="password"></textarea>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">제출하기</button>
     </form>
 </body>
 </html>

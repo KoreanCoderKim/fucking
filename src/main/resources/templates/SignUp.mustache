@@ -13,15 +13,6 @@
     }
 </style>
 <body>
-    <h1>회원가입</h1>
-    <form action="/Board" method="post">
-        <p>아이디</p><br>
-        <textarea rows="3" name="userId"></textarea>
-        <p>비밀번호</p><br>
-        <textarea rows="3" name="password"></textarea>
-        <button type="submit" class="btn btn-primary">제출하기</button>
-    </form>
-</body>
     <!-- 세션 자동 유지 JS -->
     <script>
         setInterval(() => {
@@ -31,4 +22,13 @@
             }).then(response => console.log("세션 연장됨"));
         }, 5 * 60 * 1000); // 5분마다
     </script>
+    <h1>회원가입</h1>
+    <form action="/Board" method="post">
+        <p>아이디</p><br>
+        <textarea rows="3" name="userId"></textarea>
+        <p>비밀번호</p><br>
+        <textarea rows="3" name="password"></textarea>
+        <button type="submit" class="btn btn-primary">제출하기</button>
+    </form>
+</body>
 </html>

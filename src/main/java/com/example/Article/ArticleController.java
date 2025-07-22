@@ -168,7 +168,13 @@ public class ArticleController {
     }
     // 게시글 수정(GetMapping)
     @GetMapping("/Change")
-    public String Change(Model model, @RequestParam Long ModifyId, HttpSession session) {
+    public String Change(Model model, @RequestParam Long ModifyId) {
+        model.addAttribute("MI",ModifyId);
+        return "Modifyed";
+    }
+    // 게시글 수정(PostMapping)
+    @PostMapping("/Modifying")
+    public String Modify(ChanDto form,@RequestParam Long ModifyId, HttpSession session) {
         Object userObj = null;
         Object pwObj = null;
         try {
@@ -186,18 +192,11 @@ public class ArticleController {
         }
         Optional<Article> now = articleRepository.findById(ModifyId); // 해당 아이디의 게시물 GET
         if (now.get().getUsId().equals(userObj) && now.get().getPassword().equals(pwObj)) {
-            model.addAttribute("MI",ModifyId);
-            return "Modifyed";
+            now.get().update(form.getRoomId(), form.getTitle(), form.getNews());
+            articleRepository.save(now.get());
+            System.out.println(articleRepository.findAll());
+            return "redirect:/index?RoomId=" + form.getRoomId();
         }
-        return "redirect:/Board";
-    }
-    // 게시글 수정(PostMapping)
-    @PostMapping("/Modifying")
-    public String Modify(ChanDto form,@RequestParam Long ModifyId) {
-        Optional<Article> now = articleRepository.findById(ModifyId); // 해당 아이디의 게시물 GET
-        now.get().update(form.getRoomId(),form.getTitle(),form.getNews());
-        articleRepository.save(now.get());
-        System.out.println(articleRepository.findAll());
-        return "redirect:/index?RoomId="+form.getRoomId();
+        return "redirect:/index?RoomId=" + form.getRoomId();
     }
 }

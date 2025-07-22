@@ -30,6 +30,14 @@ public class ArticleController {
     }
     @PostMapping("/Board")
     public String ToBoard(UserDto form, Model model, HttpSession session) {
+        Object userObj = null;
+        Object pwObj = null;
+        try {
+            userObj = session.getAttribute("user");
+            pwObj = session.getAttribute("pw");
+        } catch (IllegalStateException e) {
+            return "redirect:/Login";
+        }
         // 중복 아이디 확인
         if (!userRepository.existsByUsId(form.toEntity().getUsId())) {
             session.setAttribute("user",form.toEntity().getUsId());
@@ -101,8 +109,23 @@ public class ArticleController {
     // 게시글 삭제(PostMapping)
     @PostMapping("/delete")
     public String deleted(@RequestParam Long deleteId, @RequestParam String RoomId, HttpSession session) {
+        Object userObj = null;
+        Object pwObj = null;
+        try {
+            userObj = session.getAttribute("user");
+            pwObj = session.getAttribute("pw");
+        } catch (IllegalStateException e) {
+            return "redirect:/Login";
+        }
+
+        if (userObj == null) {
+            return "redirect:/Login";
+        }
+        else if (pwObj == null) {
+            return "redirect:/Login";
+        }
         Optional<Article> now = articleRepository.findById(deleteId);
-        if (now.get().getUsId().equals(session.getAttribute("user")) && now.get().getPassword().equals(session.getAttribute("pw"))) {
+        if (now.get().getUsId().equals(userObj) && now.get().getPassword().equals(pwObj)) {
             articleRepository.deleteById(deleteId);
             System.out.println(articleRepository.findAll());
             return "redirect:/index?RoomId=" + RoomId;
@@ -122,7 +145,22 @@ public class ArticleController {
     // 게시물 작성(PostMapping)
     @PostMapping("/RoomCommunity")
     public String OpenRoom(@RequestParam String RoomId, Model model, ArticleDto form, HttpSession session) {
-        Article article = form.toEntity(RoomId, (String) session.getAttribute("user"), (String) session.getAttribute("pw"));
+        Object userObj = null;
+        Object pwObj = null;
+        try {
+            userObj = session.getAttribute("user");
+            pwObj = session.getAttribute("pw");
+        } catch (IllegalStateException e) {
+            return "redirect:/Login";
+        }
+
+        if (userObj == null) {
+            return "redirect:/Login";
+        }
+        else if (pwObj == null) {
+            return "redirect:/Login";
+        }
+        Article article = form.toEntity(RoomId, (String) userObj, (String) pwObj);
         articleRepository.save(article);
         System.out.println(articleRepository.findAll());
         model.addAttribute("Id", RoomId);
@@ -131,8 +169,23 @@ public class ArticleController {
     // 게시글 수정(GetMapping)
     @GetMapping("/Change")
     public String Change(Model model, @RequestParam Long ModifyId, HttpSession session) {
+        Object userObj = null;
+        Object pwObj = null;
+        try {
+            userObj = session.getAttribute("user");
+            pwObj = session.getAttribute("pw");
+        } catch (IllegalStateException e) {
+            return "redirect:/Login";
+        }
+
+        if (userObj == null) {
+            return "redirect:/Login";
+        }
+        else if (pwObj == null) {
+            return "redirect:/Login";
+        }
         Optional<Article> now = articleRepository.findById(ModifyId); // 해당 아이디의 게시물 GET
-        if (now.get().getUsId().equals(session.getAttribute("user")) && now.get().getPassword().equals(session.getAttribute("pw"))) {
+        if (now.get().getUsId().equals(userObj) && now.get().getPassword().equals(pwObj)) {
             model.addAttribute("MI",ModifyId);
             return "Modifyed";
         }
@@ -140,7 +193,7 @@ public class ArticleController {
     }
     // 게시글 수정(PostMapping)
     @PostMapping("/Modifying")
-    public String Modify(ChanDto form,@RequestParam Long ModifyId, HttpSession session) {
+    public String Modify(ChanDto form,@RequestParam Long ModifyId) {
         Optional<Article> now = articleRepository.findById(ModifyId); // 해당 아이디의 게시물 GET
         now.get().update(form.getRoomId(),form.getTitle(),form.getNews());
         articleRepository.save(now.get());

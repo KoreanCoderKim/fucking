@@ -16,7 +16,7 @@
     <!-- 세션 자동 유지 JS -->
     <script>
         setInterval(() => {
-            fetch("/keep-session-alive", {
+            fetch("/Login", {
                 method: "GET",
                 credentials: "include" // 세션 쿠키 같이 보냄
             }).then(response => console.log("세션 연장됨"));

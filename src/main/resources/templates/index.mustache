@@ -48,4 +48,13 @@
     <a href="https://port-0-fucking-m7oxoza4fc9682d2.sel4.cloudtype.app/Made">새로운 방 만들기</a><br>
     <a href="https://port-0-fucking-m7oxoza4fc9682d2.sel4.cloudtype.app/In">다른방으로 가기</a><br>
 </footer>
+    <!-- 세션 자동 유지 JS -->
+    <script>
+        setInterval(() => {
+            fetch("/keep-session-alive", {
+                method: "GET",
+                credentials: "include" // 세션 쿠키 같이 보냄
+            }).then(response => console.log("세션 연장됨"));
+        }, 5 * 60 * 1000); // 5분마다
+    </script>
 </html>

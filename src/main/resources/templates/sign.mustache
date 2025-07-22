@@ -2,13 +2,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>RoomMake</title>
+    <title>방 생성</title>
 </head>
+<style>
+    body {
+        background-color: honeydew;
+    }
+    textarea {
+        background-color: antiquewhite;
+    }
+</style>
 <body>
     <form class="container" action="/Make" method="post">
         <label class="form-label">방 번호</label>
         <textarea rows="3" name="roomId"></textarea>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">제출하기</button>
     </form>
 </body>
 </html>

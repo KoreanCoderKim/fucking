@@ -54,6 +54,21 @@ public class ArticleController {
     }
     @PostMapping("/Board2")
     public String ToList(UserDto form, Model model, HttpSession session) {
+        Object userObj = null;
+        Object pwObj = null;
+        try {
+            userObj = session.getAttribute("user");
+            pwObj = session.getAttribute("pw");
+        } catch (IllegalStateException e) {
+            return "redirect:/Login";
+        }
+
+        if (userObj == null) {
+            return "redirect:/Login";
+        }
+        else if (pwObj == null) {
+            return "redirect:/Login";
+        }
         // 체크인
         if (userRepository.existsByUsId(form.toEntity().getUsId())) {
             List<User> finder = userRepository.findByUsId(form.toEntity().getUsId());

@@ -21,6 +21,8 @@ public class ArticleController {
     private RoomRepository roomRepository;
     @Autowired
     private UserRepository userRepository;
+    @GetMapping("/Main")
+    public String M() { return "mainindex"; }
     @GetMapping("/SignUp")
     public String signMustache(Model model, @RequestParam String SessionState) {
         if (!SessionState.equals("SessionOut")) {

@@ -13,15 +13,6 @@
     }
 </style>
 <body>
-    <!-- 세션 자동 유지 JS -->
-    <script>
-        setInterval(() => {
-            fetch("/Modifying", {
-                method: "POST",
-                credentials: "include" // 세션 쿠키 같이 보냄
-            }).then(response => console.log("세션 연장됨"));
-        }, 5 * 60 * 1000); // 5분마다
-    </script>
     <h1>수정하기</h1>
     <form action="/Modifying" method="post">
         <input type="hidden" name="ModifyId" value="{{MI}}">

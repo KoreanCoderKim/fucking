@@ -13,15 +13,7 @@
     <title>로그인 페이지</title>
 </head>
 <body>
-    <!-- 세션 자동 유지 JS -->
-    <script>
-        setInterval(() => {
-            fetch("/Board2", {
-                method: "POST",
-                credentials: "include" // 세션 쿠키 같이 보냄
-            }).then(response => console.log("세션 연장됨"));
-        }, 5 * 60 * 1000); // 5분마다
-    </script>
+    <p>세션 상태: {{State}}</p>
     <h1>로그인 시도</h1>
     <form action="/Board2" method="post">
         <p>아이디</p><br>

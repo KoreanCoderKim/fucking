@@ -62,7 +62,7 @@ public class ArticleController {
         // 체크인
         if (userRepository.existsByUsId(form.toEntity().getUsId())) {
             List<User> finder = userRepository.findByUsId(form.toEntity().getUsId());
-            if (finder.get(0).getPassword().equals(form.toEntity().getPassword())) {
+            if (finder.get(0).getPassword() == pwObj) {
                 try {
                     session.setAttribute("user",form.toEntity().getUsId());
                     session.setAttribute("pw",form.toEntity().getPassword().hashCode());
@@ -134,7 +134,7 @@ public class ArticleController {
             return "redirect:/Login?SessionState="+"SessionOut";
         }
         Optional<Article> now = articleRepository.findById(deleteId);
-        if (now.get().getUsId().equals(userObj) && now.get().getPassword().equals((String)pwObj)) {
+        if (now.get().getUsId().equals(userObj) &&  now.get().getPassword() == pwObj)) {
             articleRepository.deleteById(deleteId);
             System.out.println(articleRepository.findAll());
             return "redirect:/index?RoomId=" + RoomId;
@@ -169,7 +169,7 @@ public class ArticleController {
         else if (pwObj == null) {
             return "redirect:/Login?SessionState="+"SessionOut";
         }
-        Article article = form.toEntity(RoomId, (String) userObj, (int) pwObj);
+        Article article = form.toEntity(RoomId, (String) userObj, pwObj);
         articleRepository.save(article);
         System.out.println(articleRepository.findAll());
         model.addAttribute("Id", RoomId);

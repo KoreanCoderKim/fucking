@@ -200,7 +200,7 @@ public class ArticleController {
             return "redirect:/Login?SessionState="+"SessionOut";
         }
         Optional<Article> now = articleRepository.findById(ModifyId); // 해당 아이디의 게시물 GET
-        if (now.get().getUsId().equals(userObj) && (int) now.get().getPassword() == (int) pwObj) {
+        if (now.get().getUsId().equals(userObj) && now.get().getPassword().equals((String) pwObj)) {
             now.get().update(form.getRoomId(), form.getTitle(), form.getNews());
             articleRepository.save(now.get());
             System.out.println(articleRepository.findAll());

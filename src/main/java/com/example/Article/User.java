@@ -14,9 +14,9 @@ public class User {
     @Column
     private String usId;
     @Column
-    private String password;
+    private Object password;
 
-    public User(Long id, String usId, String password) {
+    public User(Long id, String usId, Object password) {
         this.id = id;
         this.usId = usId;
         this.password = password;

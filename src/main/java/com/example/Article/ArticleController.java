@@ -25,7 +25,7 @@ public class ArticleController {
         return "mainindex";
     }
     @GetMapping("/SignUp")
-    public String signMustache(Moodel model, @RequestParam String SessionState) {
+    public String signMustache(Model model, @RequestParam String SessionState) {
         if (!SessionState.equals("SessionOut")) {
             model.addAttribute("State","세션 작동중");
         } else {

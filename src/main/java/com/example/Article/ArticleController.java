@@ -30,18 +30,14 @@ public class ArticleController {
     }
     @PostMapping("/Board")
     public String ToBoard(UserDto form, Model model, HttpSession session) {
-        Object userObj = null;
-        Object pwObj = null;
-        try {
-            userObj = session.getAttribute("user");
-            pwObj = session.getAttribute("pw");
-        } catch (IllegalStateException e) {
-            return "redirect:/Login";
-        }
         // 중복 아이디 확인
         if (!userRepository.existsByUsId(form.toEntity().getUsId())) {
-            session.setAttribute("user",form.toEntity().getUsId());
-            session.setAttribute("pw",form.toEntity().getPassword());
+            try {
+                session.setAttribute("user",form.toEntity().getUsId());
+                session.setAttribute("pw",form.toEntity().getPassword());
+            } catch (IllegalStateException e) {
+                return "redirect:/Login";
+            }
             model.addAttribute("userId", form.toEntity().getUsId());
             userRepository.save(form.toEntity());
             return "List";

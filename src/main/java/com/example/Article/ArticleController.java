@@ -26,7 +26,7 @@ public class ArticleController {
     }
     @GetMapping("/SignUp")
     public String signMustache(Moodel model, @RequestParam String SessionState) {
-        if (SessionState.equals("Good")) {
+        if (!SessionState.equals("SessionOut")) {
             model.addAttribute("State","세션 작동중");
         } else {
             model.addAttribute("State", SessionState);
@@ -41,7 +41,7 @@ public class ArticleController {
                 session.setAttribute("user",form.toEntity().getUsId());
                 session.setAttribute("pw",form.toEntity().getPassword());
             } catch (IllegalStateException e) {
-                return "redirect:/SignUp?SessionState="+"Session Out";
+                return "redirect:/SignUp?SessionState="+"SessionOut";
             }
             model.addAttribute("userId", form.toEntity().getUsId());
             userRepository.save(form.toEntity());

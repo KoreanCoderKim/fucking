@@ -122,14 +122,14 @@ public class ArticleController {
             userObj = session.getAttribute("user");
             pwObj = session.getAttribute("pw");
         } catch (IllegalStateException e) {
-            return "redirect:/Login";
+            return "redirect:/Login?SessionState="+"SessionOut";
         }
 
         if (userObj == null) {
-            return "redirect:/Login";
+            return "redirect:/Login?SessionState="+"SessionOut";
         }
         else if (pwObj == null) {
-            return "redirect:/Login";
+            return "redirect:/Login?SessionState="+"SessionOut";
         }
         Optional<Article> now = articleRepository.findById(deleteId);
         if (now.get().getUsId().equals(userObj) && now.get().getPassword().hashCode() == (int) pwObj) {
@@ -158,14 +158,14 @@ public class ArticleController {
             userObj = session.getAttribute("user");
             pwObj = session.getAttribute("pw");
         } catch (IllegalStateException e) {
-            return "redirect:/Login";
+            return "redirect:/Login?SessionState="+"SessionOut";
         }
 
         if (userObj == null) {
-            return "redirect:/Login";
+            return "redirect:/Login?SessionState="+"SessionOut";
         }
         else if (pwObj == null) {
-            return "redirect:/Login";
+            return "redirect:/Login?SessionState="+"SessionOut";
         }
         Article article = form.toEntity(RoomId, (String) userObj, (String) pwObj);
         articleRepository.save(article);
@@ -188,14 +188,14 @@ public class ArticleController {
             userObj = session.getAttribute("user");
             pwObj = session.getAttribute("pw");
         } catch (IllegalStateException e) {
-            return "redirect:/Login";
+            return "redirect:/Login?SessionState="+"SessionOut";
         }
 
         if (userObj == null) {
-            return "redirect:/Login";
+            return "redirect:/Login?SessionState="+"SessionOut";
         }
         else if (pwObj == null) {
-            return "redirect:/Login";
+            return "redirect:/Login?SessionState="+"SessionOut";
         }
         Optional<Article> now = articleRepository.findById(ModifyId); // 해당 아이디의 게시물 GET
         if (now.get().getUsId().equals(userObj) && now.get().getPassword().hashCode() == (int) pwObj) {

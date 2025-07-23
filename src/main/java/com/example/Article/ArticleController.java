@@ -169,7 +169,7 @@ public class ArticleController {
         else if (pwObj == null) {
             return "redirect:/Login?SessionState="+"SessionOut";
         }
-        Article article = form.toEntity(RoomId, (String) userObj, (String) pwObj);
+        Article article = form.toEntity(RoomId, (String) userObj, (int) pwObj);
         articleRepository.save(article);
         System.out.println(articleRepository.findAll());
         model.addAttribute("Id", RoomId);
@@ -200,7 +200,7 @@ public class ArticleController {
             return "redirect:/Login?SessionState="+"SessionOut";
         }
         Optional<Article> now = articleRepository.findById(ModifyId); // 해당 아이디의 게시물 GET
-        if (now.get().getUsId().equals(userObj) && now.get().getPassword().equals((String) pwObj)) {
+        if (now.get().getUsId().equals(userObj) && now.get().getPassword() == pwObj) {
             now.get().update(form.getRoomId(), form.getTitle(), form.getNews());
             articleRepository.save(now.get());
             System.out.println(articleRepository.findAll());

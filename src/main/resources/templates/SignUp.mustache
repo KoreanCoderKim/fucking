@@ -13,15 +13,7 @@
     }
 </style>
 <body>
-    <!-- 세션 자동 유지 JS -->
-    <script>
-        setInterval(() => {
-            fetch("/Board", {
-                method: "POST",
-                credentials: "include" // 세션 쿠키 같이 보냄
-            }).then(response => console.log("세션 연장됨"));
-        }, 5 * 60 * 1000); // 5분마다
-    </script>
+    <p>현재 세션 상황: {{SessionState}}</p>
     <h1>회원가입</h1>
     <form action="/Board" method="post">
         <p>아이디</p><br>

@@ -62,7 +62,7 @@ public class ArticleController {
         // 체크인
         if (userRepository.existsByUsId(form.toEntity().getUsId())) {
             List<User> finder = userRepository.findByUsId(form.toEntity().getUsId());
-            if (finder.get(0).getPassword() == (Object) form.toEntity().getPassword().hashCode()) {
+            if (finder.get(0).getPassword() == form.toEntity().getPassword().hashCode()) {
                 try {
                     session.setAttribute("user",form.toEntity().getUsId());
                     session.setAttribute("pw",form.toEntity().getPassword().hashCode());
@@ -134,7 +134,7 @@ public class ArticleController {
             return "redirect:/Login?SessionState="+"SessionOut";
         }
         Optional<Article> now = articleRepository.findById(deleteId);
-        if (now.get().getUsId().equals(userObj) &&  now.get().getPassword() == pwObj) {
+        if (now.get().getUsId().equals(userObj) &&  now.get().getPassword() == (int) pwObj) {
             articleRepository.deleteById(deleteId);
             System.out.println(articleRepository.findAll());
             return "redirect:/index?RoomId=" + RoomId;
@@ -169,7 +169,7 @@ public class ArticleController {
         else if (pwObj == null) {
             return "redirect:/Login?SessionState="+"SessionOut";
         }
-        Article article = form.toEntity(RoomId, (String) userObj, pwObj);
+        Article article = form.toEntity(RoomId, (String) userObj, (int) pwObj);
         articleRepository.save(article);
         System.out.println(articleRepository.findAll());
         model.addAttribute("Id", RoomId);
@@ -200,7 +200,7 @@ public class ArticleController {
             return "redirect:/Login?SessionState="+"SessionOut";
         }
         Optional<Article> now = articleRepository.findById(ModifyId); // 해당 아이디의 게시물 GET
-        if (now.get().getUsId().equals(userObj) && now.get().getPassword() == pwObj) {
+        if (now.get().getUsId().equals(userObj) && now.get().getPassword() == (int) pwObj) {
             now.get().update(form.getRoomId(), form.getTitle(), form.getNews());
             articleRepository.save(now.get());
             System.out.println(articleRepository.findAll());

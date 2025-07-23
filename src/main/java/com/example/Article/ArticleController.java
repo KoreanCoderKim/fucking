@@ -134,7 +134,7 @@ public class ArticleController {
             return "redirect:/Login?SessionState="+"SessionOut";
         }
         Optional<Article> now = articleRepository.findById(deleteId);
-        if (now.get().getUsId().equals(userObj) &&  now.get().getPassword() == pwObj)) {
+        if (now.get().getUsId().equals(userObj) &&  now.get().getPassword() == pwObj) {
             articleRepository.deleteById(deleteId);
             System.out.println(articleRepository.findAll());
             return "redirect:/index?RoomId=" + RoomId;

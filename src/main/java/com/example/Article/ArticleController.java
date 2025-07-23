@@ -1,3 +1,4 @@
+
 package com.example.Article;
 
 import jakarta.servlet.http.HttpSession;
@@ -20,10 +21,6 @@ public class ArticleController {
     private RoomRepository roomRepository;
     @Autowired
     private UserRepository userRepository;
-    @GetMapping("/Main")
-    public String M() {
-        return "mainindex";
-    }
     @GetMapping("/SignUp")
     public String signMustache(Model model, @RequestParam String SessionState) {
         if (!SessionState.equals("SessionOut")) {
@@ -39,7 +36,7 @@ public class ArticleController {
         if (!userRepository.existsByUsId(form.toEntity().getUsId())) {
             try {
                 session.setAttribute("user",form.toEntity().getUsId());
-                session.setAttribute("pw",form.toEntity().getPassword());
+                session.setAttribute("pw",form.toEntity().getPassword().hashCode());
             } catch (IllegalStateException e) {
                 return "redirect:/SignUp?SessionState="+"SessionOut";
             }
@@ -50,32 +47,26 @@ public class ArticleController {
         return "redirect:/SignUp";
     }
     @GetMapping("/Login")
-    public String LoginMustache() {
+    public String LoginMustache(@RequestParam String SessionState, Model model) {
+        if (!SessionState.equals("SessionOut")) {
+            model.addAttribute("State","세션 작동중");
+        } else {
+            model.addAttribute("State", SessionState);
+        }
         return "Login";
     }
     @PostMapping("/Board2")
     public String ToList(UserDto form, Model model, HttpSession session) {
-        Object userObj = null;
-        Object pwObj = null;
-        try {
-            userObj = session.getAttribute("user");
-            pwObj = session.getAttribute("pw");
-        } catch (IllegalStateException e) {
-            return "redirect:/Login";
-        }
-
-        if (userObj == null) {
-            return "redirect:/Login";
-        }
-        else if (pwObj == null) {
-            return "redirect:/Login";
-        }
         // 체크인
         if (userRepository.existsByUsId(form.toEntity().getUsId())) {
             List<User> finder = userRepository.findByUsId(form.toEntity().getUsId());
             if (finder.get(0).getPassword().equals(form.toEntity().getPassword())) {
-                session.setAttribute("user",form.toEntity().getUsId());
-                session.setAttribute("pw",form.toEntity().getPassword());
+                try {
+                    session.setAttribute("user",form.toEntity().getUsId());
+                    session.setAttribute("pw",form.toEntity().getPassword().hashCode());
+                } catch (IllegalStateException e) {
+                    return "redirect:/Login?SessionState="+"SessionOut";
+                }
                 model.addAttribute("userId", form.toEntity().getUsId());
                 userRepository.save(form.toEntity());
                 return "List";
@@ -141,7 +132,7 @@ public class ArticleController {
             return "redirect:/Login";
         }
         Optional<Article> now = articleRepository.findById(deleteId);
-        if (now.get().getUsId().equals(userObj) && now.get().getPassword().equals(pwObj)) {
+        if (now.get().getUsId().equals(userObj) && now.get().getPassword().hashCode() == (int) pwObj) {
             articleRepository.deleteById(deleteId);
             System.out.println(articleRepository.findAll());
             return "redirect:/index?RoomId=" + RoomId;
@@ -207,7 +198,7 @@ public class ArticleController {
             return "redirect:/Login";
         }
         Optional<Article> now = articleRepository.findById(ModifyId); // 해당 아이디의 게시물 GET
-        if (now.get().getUsId().equals(userObj) && now.get().getPassword().equals(pwObj)) {
+        if (now.get().getUsId().equals(userObj) && now.get().getPassword().hashCode() == (int) pwObj) {
             now.get().update(form.getRoomId(), form.getTitle(), form.getNews());
             articleRepository.save(now.get());
             System.out.println(articleRepository.findAll());

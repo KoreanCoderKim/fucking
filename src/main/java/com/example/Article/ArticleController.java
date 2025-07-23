@@ -46,7 +46,7 @@ public class ArticleController {
             userRepository.save(form.toEntity());
             return "List";
         }
-        return "redirect:/SignUp";
+        return "redirect:/SignUp?SignUp=Good";
     }
     @GetMapping("/Login")
     public String LoginMustache(@RequestParam String SessionState, Model model) {

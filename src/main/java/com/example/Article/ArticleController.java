@@ -36,7 +36,7 @@ public class ArticleController {
                 session.setAttribute("user",form.toEntity().getUsId());
                 session.setAttribute("pw",form.toEntity().getPassword());
             } catch (IllegalStateException e) {
-                return "redirect:/Login";
+                return "redirect:/Board";
             }
             model.addAttribute("userId", form.toEntity().getUsId());
             userRepository.save(form.toEntity());

@@ -46,7 +46,7 @@ public class ArticleController {
             userRepository.save(form.toEntity());
             return "List";
         }
-        return "redirect:/SignUp?SignUp=Good";
+        return "redirect:/SignUp?SessionState=Good";
     }
     @GetMapping("/Login")
     public String LoginMustache(@RequestParam String SessionState, Model model) {
@@ -74,7 +74,7 @@ public class ArticleController {
                 return "List";
             }
         }
-        return "redirect:/Login";
+        return "redirect:/Login?SessionState=Good";
     }
     // 방 생성(GetMapping)
     @GetMapping("/Made")

@@ -25,7 +25,12 @@ public class ArticleController {
         return "mainindex";
     }
     @GetMapping("/SignUp")
-    public String signMustache() {
+    public String signMustache(Moodel model, @RequestParam String SessionState) {
+        if (!SessionState) {
+            model.addAttribute("State","세션 작동중");
+        } else {
+            model.addAttribute("State", SessionState);
+        }
         return "SignUp";
     }
     @PostMapping("/Board")
@@ -36,7 +41,7 @@ public class ArticleController {
                 session.setAttribute("user",form.toEntity().getUsId());
                 session.setAttribute("pw",form.toEntity().getPassword());
             } catch (IllegalStateException e) {
-                return "redirect:/Board"; // 세션 만료시, 세션 복귀
+                return "redirect:/SignUp?SessionState="+"Session Out";
             }
             model.addAttribute("userId", form.toEntity().getUsId());
             userRepository.save(form.toEntity());

@@ -18,7 +18,7 @@ public class ArticleDto {
     @Column
     private String News;
 
-    public ArticleDto(String userId, String password, String title, String News) {
+    public ArticleDto(String userId, int password, String title, String News) {
         this.title = title;
         this.News = News;
     }

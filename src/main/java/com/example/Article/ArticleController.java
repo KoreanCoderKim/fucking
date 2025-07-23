@@ -26,7 +26,7 @@ public class ArticleController {
     }
     @GetMapping("/SignUp")
     public String signMustache(Moodel model, @RequestParam String SessionState) {
-        if (!SessionState) {
+        if (SessionState.equals("Good")) {
             model.addAttribute("State","세션 작동중");
         } else {
             model.addAttribute("State", SessionState);

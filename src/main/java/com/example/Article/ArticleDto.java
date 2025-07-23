@@ -18,12 +18,12 @@ public class ArticleDto {
     @Column
     private String News;
 
-    public ArticleDto(String userId, Object password, String title, String News) {
+    public ArticleDto(String userId, String password, String title, String News) {
         this.title = title;
         this.News = News;
     }
 
-    public Article toEntity(String Data, String usId, Object password) {
+    public Article toEntity(String Data, String usId, int password) {
         return new Article(null, usId, password, Data, title, News);
     }
 }

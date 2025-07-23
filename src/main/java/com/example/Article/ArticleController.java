@@ -62,7 +62,7 @@ public class ArticleController {
         // 체크인
         if (userRepository.existsByUsId(form.toEntity().getUsId())) {
             List<User> finder = userRepository.findByUsId(form.toEntity().getUsId());
-            if (finder.get(0).getPassword() == form.toEntity().getPassword().hashCode()) {
+            if (finder.get(0).getPassword() == (Object) form.toEntity().getPassword().hashCode()) {
                 try {
                     session.setAttribute("user",form.toEntity().getUsId());
                     session.setAttribute("pw",form.toEntity().getPassword().hashCode());

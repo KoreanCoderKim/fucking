@@ -22,12 +22,12 @@ public class Article {
     @Column
     private String roomId;
     @Column
-    private Object password;
+    private int password;
     @Column
     private String title;
     @Column
     private String News;
-    public Article(Long id, String usId, Object password, String roomId, String title, String News) {
+    public Article(Long id, String usId, int password, String roomId, String title, String News) {
         this.id = id;
         this.roomId = roomId;
         this.usId = usId;

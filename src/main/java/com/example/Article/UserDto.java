@@ -13,9 +13,9 @@ public class UserDto {
     @Column
     private String userId;
     @Column
-    private Object password;
+    private String password;
 
-    public UserDto(String userId, Object password) {
+    public UserDto(String userId, String password) {
         this.userId = userId;
         this.password = password;
     }

@@ -35,15 +35,6 @@
     <p>유저이름 | 제목 | 내용</p>
 </header>
 <body>
-<!-- 세션 자동 유지 JS -->
-    <script>
-        setInterval(() => {
-            fetch("/delete", {
-                method: "POST",
-                credentials: "include" // 세션 쿠키 같이 보냄
-            }).then(response => console.log("세션 연장됨"));
-        }, 5 * 60 * 1000); // 5분마다
-    </script>
 {{#Data}}
     <div style="display: flex; align-items: center; gap: 10px;">
         <p>{{usId}} | {{title}} | {{News}}</p>

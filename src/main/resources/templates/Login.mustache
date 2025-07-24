@@ -22,5 +22,22 @@
         <textarea rows="3" name="password"></textarea>
         <button type="submit" class="btn btn-primary">제출하기</button>
     </form>
+    <script>
+    function checkSessionStatus() {
+        fetch('/session-status')
+            .then(response => {
+                if (response.status === 401) { // 세션 만료
+                    alert("세션이 만료되었습니다. 페이지를 새로고침합니다.");
+                    location.reload(); // 페이지 새로고침
+                }
+            })
+            .catch(error => {
+                console.error("세션 상태 확인 중 오류 발생:", error);
+            });
+    }
+
+    // 1분마다 세션 상태 확인 (60000ms = 60초)
+    setInterval(checkSessionStatus, 60000);
+    </script>
 </body>
 </html>

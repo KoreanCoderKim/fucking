@@ -23,21 +23,22 @@
         <button type="submit" class="btn btn-primary">제출하기</button>
     </form>
     <script>
-    function checkSessionStatus() {
-        fetch('/session-status')
-            .then(response => {
-                if (response.status === 401) { // 세션 만료
-                    alert("세션이 만료되었습니다. 페이지를 새로고침합니다.");
-                    location.reload(); // 페이지 새로고침
-                }
-            })
-            .catch(error => {
-                console.error("세션 상태 확인 중 오류 발생:", error);
-            });
-    }
-
-    // 1분마다 세션 상태 확인 (60000ms = 60초)
-    setInterval(checkSessionStatus, 60000);
+      // 5분마다 서버에 요청 보내기
+      setInterval(() => {
+        fetch('/session-ping', {
+          method: 'POST',
+          credentials: 'include'  // 세션 쿠키 포함
+        }).then(res => {
+          if (res.ok) {
+            console.log("세션 연장 성공");
+          }
+          if (!res.ok) {
+            console.warn("세션 연장 실패");
+          }
+        }).catch(err => {
+          console.error("서버 연결 실패", err);
+        });
+      }, 5 * 60 * 1000); // 5분마다
     </script>
 </body>
 </html>

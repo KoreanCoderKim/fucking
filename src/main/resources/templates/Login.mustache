@@ -29,6 +29,9 @@
           method: 'POST',
           credentials: 'include'  // 세션 쿠키 포함
         }).then(res => {
+          if (res.ok) {
+            console.log("세션 연장 성공");
+          }
           if (!res.ok) {
             console.warn("세션 연장 실패");
           }

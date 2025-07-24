@@ -16,14 +16,23 @@
     <title>게시글 작성</title>
 </head>
 <body>
-    <!-- 세션 자동 유지 JS -->
     <script>
-        setInterval(() => {
-            fetch("/RoomCommunity", {
-                method: "POST",
-                credentials: "include" // 세션 쿠키 같이 보냄
-            }).then(response => console.log("세션 연장됨"));
-        }, 5 * 60 * 1000); // 5분마다
+      // 5분마다 서버에 요청 보내기
+      setInterval(() => {
+        fetch('/session-ping', {
+          method: 'POST',
+          credentials: 'include'  // 세션 쿠키 포함
+        }).then(res => {
+          if (res.ok) {
+            console.log("세션 연장 성공");
+          }
+          if (!res.ok) {
+            console.warn("세션 연장 실패");
+          }
+        }).catch(err => {
+          console.error("서버 연결 실패", err);
+        });
+      }, 5 * 60 * 1000); // 5분마다
     </script>
     <h1>글 작성하기</h1>
     <form class="container" action="/RoomCommunity" method="post">

@@ -17,6 +17,24 @@
     <p color="white">홈 화면</p>
 </head>
 <body>
+    <script>
+      // 5분마다 서버에 요청 보내기
+      setInterval(() => {
+        fetch('/session-ping', {
+          method: 'POST',
+          credentials: 'include'  // 세션 쿠키 포함
+        }).then(res => {
+          if (res.ok) {
+            console.log("세션 연장 성공");
+          }
+          if (!res.ok) {
+            console.warn("세션 연장 실패");
+          }
+        }).catch(err => {
+          console.error("서버 연결 실패", err);
+        });
+      }, 5 * 60 * 1000); // 5분마다
+    </script>
     <h1>{{userId}}님 안녕하세요!</h1>
     <li>
         <a href="https://port-0-fucking-m7oxoza4fc9682d2.sel4.cloudtype.app/Made">방 생성</a>

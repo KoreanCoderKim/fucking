@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Controller
 public class ArticleController {
-     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     // 게시물 관리소
     @Autowired
     private ArticleRepository articleRepository;

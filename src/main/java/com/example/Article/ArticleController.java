@@ -99,20 +99,27 @@ public class ArticleController {
     // 방 입장(PostMapping)
     @PostMapping("/Process")
     public String GO(PosDto form) {
+        int PageValue = articleRepository.findByRoomId(form.getRoomId()).size()/5;
         if (roomRepository.existsByRoomId(form.getRoomId()))
-            return "redirect:/index?RoomId="+form.getRoomId();
-        System.out.println(articleRepository.findAll());
+            return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue;
         return "redirect:/In";
     }
     // 보드 페이지(GetMapping)
     @GetMapping("/index")
-    public String App(Model model, @RequestParam String RoomId) {
+    public String App(Model model, @RequestParam String RoomId, @RequestParam int Page) {
+        int PageValue = articleRepository.findByRoomId(RoomId).size()/5;
+        List<Integer> Pages = new java.util.ArrayList<>(List.of());
+        for (int i = 1; i <= PageValue; i++) {
+            Pages.add(i);
+        }
+        List<Article> articles = articleRepository.findByRoomId(RoomId).subList((Page-1)*5, (Page*5)-1);
         if (roomRepository.existsByRoomId(RoomId)) {
-            model.addAttribute("Data", articleRepository.findByRoomId(RoomId));
+            model.addAttribute("Data", articles);
             model.addAttribute("Id", RoomId);
+            model.addAttribute("Pager", Pages);
             return "index";
         }
-        System.out.println(articleRepository.findAll());
+        System.out.println(articles);
         return "redirect:/In";
     }
     // 게시글 삭제(PostMapping)
@@ -137,9 +144,10 @@ public class ArticleController {
         if (now.get().getUsId().equals(userObj) &&  now.get().getPassword() == (int) pwObj) {
             articleRepository.deleteById(deleteId);
             System.out.println(articleRepository.findAll());
-            return "redirect:/index?RoomId=" + RoomId;
+            int PageValue = articleRepository.findByRoomId(form.getRoomId()).size()/5;
+            return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue;
         }
-        return "redirect:/index?RoomId="+RoomId;
+        return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue;
     }
     // 게시물 작성(GetMapping)
     @GetMapping("/new")
@@ -172,8 +180,9 @@ public class ArticleController {
         Article article = form.toEntity(RoomId, (String) userObj, (int) pwObj);
         articleRepository.save(article);
         System.out.println(articleRepository.findAll());
+        int PageValue = articleRepository.findByRoomId(form.getRoomId()).size()/5;
         model.addAttribute("Id", RoomId);
-        return "redirect:/index?RoomId="+RoomId;
+        return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue;
     }
     // 게시글 수정(GetMapping)
     @GetMapping("/Change")
@@ -199,13 +208,14 @@ public class ArticleController {
         else if (pwObj == null) {
             return "redirect:/Login?SessionState="+"SessionOut";
         }
+        int PageValue = articleRepository.findByRoomId(form.getRoomId()).size()/5;
         Optional<Article> now = articleRepository.findById(ModifyId); // 해당 아이디의 게시물 GET
         if (now.get().getUsId().equals(userObj) && now.get().getPassword() == (int) pwObj) {
             now.get().update(form.getRoomId(), form.getTitle(), form.getNews());
             articleRepository.save(now.get());
             System.out.println(articleRepository.findAll());
-            return "redirect:/index?RoomId=" + form.getRoomId();
+            return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue;
         }
-        return "redirect:/index?RoomId=" + form.getRoomId();
+        return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue;
     }
 }

@@ -115,7 +115,7 @@ public class ArticleController {
             Pages.add(i);
         }
         List<Article> articles = List.of();
-        if (articleRepository.findByRoomId(RoomId).size()-1 < (Page*5)-1)
+        if (articleRepository.findByRoomId(RoomId).size()-1 < (Page*5)-1 && !articleRepository.findByRoomId(RoomId))
             articles = articleRepository.findByRoomId(RoomId).subList((Page-1)*5, articleRepository.findByRoomId(RoomId).size()-1);
         else if (articleRepository.findByRoomId(RoomId).size()-1 >= (Page*5)-1)
             articles = articleRepository.findByRoomId(RoomId).subList((Page-1)*5, (Page*5)-1);

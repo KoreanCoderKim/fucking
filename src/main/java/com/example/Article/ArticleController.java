@@ -39,7 +39,7 @@ public class ArticleController {
             try {
                 session.setAttribute("user",form.toEntity().getUsId());
                 BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-                String encodedPw = encoder.encode(form.getPassword());
+                String encodedPw = encoder.encode(form.toEntity().getPassword());
                 session.setAttribute("pw",encodedPw);
             } catch (IllegalStateException e) {
                 return "redirect:/SignUp?SessionState="+"SessionOut";
@@ -68,7 +68,7 @@ public class ArticleController {
                 try {
                     session.setAttribute("user",form.toEntity().getUsId());
                     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-                    String encodedPw = encoder.encode(form.getPassword());
+                    String encodedPw = encoder.encode(form.toEntity().getPassword());
                     session.setAttribute("pw",encodedPw);
                 } catch (IllegalStateException e) {
                     return "redirect:/Login?SessionState="+"SessionOut";
@@ -147,6 +147,7 @@ public class ArticleController {
     // 게시글 삭제(PostMapping)
     @PostMapping("/delete")
     public String deleted(@RequestParam Long deleteId, @RequestParam String RoomId, HttpSession session) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         Object userObj = null;
         Object pwObj = null;
         try {
@@ -225,6 +226,7 @@ public class ArticleController {
     // 게시글 수정(PostMapping)
     @PostMapping("/Modifying")
     public String Modify(ChanDto form,@RequestParam Long ModifyId, HttpSession session) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         Object userObj = null;
         Object pwObj = null;
         try {

@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+@Setter
 @Table(name="Us")
 public class UserDto {
     @Id
@@ -29,5 +30,5 @@ public class UserDto {
                 '}';
     }
 
-    public User toEntity(String password) { return new User(null, userId, password); }
+    public User toEntity() { return new User(null, userId, password); }
 }

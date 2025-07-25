@@ -99,9 +99,7 @@ public class ArticleController {
     // 방 입장(PostMapping)
     @PostMapping("/Process")
     public String GO(PosDto form) {
-        int PageValue = articleRepository.findByRoomId(form.getRoomId()).size()/5;
-        if (PageValue == 0)
-            PageValue = 1;
+        int PageValue = articleRepository.findByRoomId(form.getRoomId()).size()/5+1;
         if (roomRepository.existsByRoomId(form.getRoomId()))
             return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue;
         return "redirect:/In";
@@ -109,7 +107,7 @@ public class ArticleController {
     // 보드 페이지(GetMapping)
     @GetMapping("/index")
     public String App(Model model, @RequestParam String RoomId, @RequestParam int Page) {
-        int PageValue = articleRepository.findByRoomId(RoomId).size()/5;
+        int PageValue = articleRepository.findByRoomId(RoomId).size()/5+1;
         List<Integer> Pages = new java.util.ArrayList<>(List.of());
         for (int i = 1; i <= PageValue; i++) {
             Pages.add(i);
@@ -150,10 +148,10 @@ public class ArticleController {
         if (now.get().getUsId().equals(userObj) &&  now.get().getPassword() == (int) pwObj) {
             articleRepository.deleteById(deleteId);
             System.out.println(articleRepository.findAll());
-            int PageValue = articleRepository.findByRoomId(RoomId).size()/5;
+            int PageValue = articleRepository.findByRoomId(RoomId).size()/5+1;
             return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue;
         }
-        int PageValue = articleRepository.findByRoomId(RoomId).size()/5;
+        int PageValue = articleRepository.findByRoomId(RoomId).size()/5+1;
         return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue;
     }
     // 게시물 작성(GetMapping)
@@ -187,7 +185,7 @@ public class ArticleController {
         Article article = form.toEntity(RoomId, (String) userObj, (int) pwObj);
         articleRepository.save(article);
         System.out.println(articleRepository.findAll());
-        int PageValue = articleRepository.findByRoomId(RoomId).size()/5;
+        int PageValue = articleRepository.findByRoomId(RoomId).size()/5+1;
         model.addAttribute("Id", RoomId);
         return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue;
     }
@@ -215,7 +213,7 @@ public class ArticleController {
         else if (pwObj == null) {
             return "redirect:/Login?SessionState="+"SessionOut";
         }
-        int PageValue = articleRepository.findByRoomId(form.getRoomId()).size()/5;
+        int PageValue = articleRepository.findByRoomId(form.getRoomId()).size()/5+1;
         Optional<Article> now = articleRepository.findById(ModifyId); // 해당 아이디의 게시물 GET
         if (now.get().getUsId().equals(userObj) && now.get().getPassword() == (int) pwObj) {
             now.get().update(form.getRoomId(), form.getTitle(), form.getNews());

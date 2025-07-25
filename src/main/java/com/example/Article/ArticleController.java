@@ -144,10 +144,11 @@ public class ArticleController {
         if (now.get().getUsId().equals(userObj) &&  now.get().getPassword() == (int) pwObj) {
             articleRepository.deleteById(deleteId);
             System.out.println(articleRepository.findAll());
-            int PageValue = articleRepository.findByRoomId(form.getRoomId()).size()/5;
-            return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue;
+            int PageValue = articleRepository.findByRoomId(RoomId).size()/5;
+            return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue;
         }
-        return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue;
+        int PageValue = articleRepository.findByRoomId(RoomId).size()/5;
+        return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue;
     }
     // 게시물 작성(GetMapping)
     @GetMapping("/new")
@@ -180,9 +181,9 @@ public class ArticleController {
         Article article = form.toEntity(RoomId, (String) userObj, (int) pwObj);
         articleRepository.save(article);
         System.out.println(articleRepository.findAll());
-        int PageValue = articleRepository.findByRoomId(form.getRoomId()).size()/5;
+        int PageValue = articleRepository.findByRoomId(RoomId).size()/5;
         model.addAttribute("Id", RoomId);
-        return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue;
+        return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue;
     }
     // 게시글 수정(GetMapping)
     @GetMapping("/Change")

@@ -249,7 +249,7 @@ public class ArticleController {
         int PageValue = articleRepository.findByRoomId(form.getRoomId()).size()/5;
         int PageValue2 = articleRepository.findByRoomId(form.getRoomId()).size()/5+1;
         if (articleRepository.findByRoomId(form.getRoomId()).size() % 5 == 0)
-            return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue;
-        return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue2;
+            return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue;
+        return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue2;
     }
 }

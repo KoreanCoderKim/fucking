@@ -101,8 +101,8 @@ public class ArticleController {
         int PageValue = articleRepository.findByRoomId(form.getRoomId()).size()/5;
         if (roomRepository.existsByRoomId(form.getRoomId())) {
             if (PageValue % 5 == 0)
-                return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue;
-            return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue+1;
+                return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue;
+            return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue+1;
         }
         return "redirect:/In";
     }
@@ -238,11 +238,11 @@ public class ArticleController {
             articleRepository.save(now.get());
             System.out.println(articleRepository.findAll());
             if (PageValue % 5 == 0)
-                return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue;
-            return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue+1;
+                return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue;
+            return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue+1;
         }
         if (PageValue % 5 == 0)
-            return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue;
-        return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue+1;
+            return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue;
+        return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue+1;
     }
 }

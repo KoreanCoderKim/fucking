@@ -29,5 +29,5 @@ public class UserDto {
                 '}';
     }
 
-    public User toEntity() { return new User(null, userId, password); }
+    public User toEntity(String password) { return new User(null, userId, password); }
 }

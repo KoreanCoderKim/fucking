@@ -100,9 +100,7 @@ public class ArticleController {
     public String GO(PosDto form) {
         int PageValue = articleRepository.findByRoomId(form.getRoomId()).size()/5;
         if (roomRepository.existsByRoomId(form.getRoomId())) {
-            if (PageValue % 5 == 0)
-                return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue;
-            return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue+1;
+            return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue;
         }
         return "redirect:/In";
     }
@@ -161,14 +159,10 @@ public class ArticleController {
             articleRepository.deleteById(deleteId);
             System.out.println(articleRepository.findAll());
             int PageValue = articleRepository.findByRoomId(RoomId).size()/5;
-            if (PageValue % 5 == 0)
-                return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue;
-            return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue+1;
+            return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue;
         }
         int PageValue = articleRepository.findByRoomId(RoomId).size()/5;
-        if (PageValue % 5 == 0)
-                return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue;
-        return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue+1;
+        return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue;
     }
     // 게시물 작성(GetMapping)
     @GetMapping("/new")
@@ -203,9 +197,7 @@ public class ArticleController {
         System.out.println(articleRepository.findAll());
         int PageValue = articleRepository.findByRoomId(RoomId).size()/5;
         model.addAttribute("Id", RoomId);
-        if (PageValue % 5 == 0)
-            return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue;
-        return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue+1;
+        return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue;
     }
     // 게시글 수정(GetMapping)
     @GetMapping("/Change")
@@ -237,12 +229,8 @@ public class ArticleController {
             now.get().update(form.getRoomId(), form.getTitle(), form.getNews());
             articleRepository.save(now.get());
             System.out.println(articleRepository.findAll());
-            if (PageValue % 5 == 0)
-                return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue;
-            return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue+1;
-        }
-        if (PageValue % 5 == 0)
             return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue;
-        return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue+1;
+        }
+        return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue;
     }
 }

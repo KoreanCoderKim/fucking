@@ -35,17 +35,18 @@ public class ArticleController {
     }
     @PostMapping("/Board")
     public String ToBoard(UserDto form, Model model, HttpSession session) {
+        String encodedPw;
         // 중복 아이디 확인
         if (!userRepository.existsByUsId(form.toEntity().getUsId())) {
             try {
                 session.setAttribute("user",form.toEntity().getUsId());
-                String encodedPw = encoder.encode(form.toEntity().getPassword());
+                encodedPw = encoder.encode(form.toEntity().getPassword());
                 session.setAttribute("pw",encodedPw);
             } catch (IllegalStateException e) {
                 return "redirect:/SignUp?SessionState="+"SessionOut";
             }
             model.addAttribute("userId", form.toEntity().getUsId());
-            userRepository.save(form.toEntity());
+            userRepository.save(form.toEntity(encodedPw));
             return "List";
         }
         return "redirect:/SignUp?SessionState=Good";
@@ -61,19 +62,20 @@ public class ArticleController {
     }
     @PostMapping("/Board2")
     public String ToList(UserDto form, Model model, HttpSession session) {
+        String encodedPw;
         // 체크인
         if (userRepository.existsByUsId(form.toEntity().getUsId())) {
             List<User> finder = userRepository.findByUsId(form.toEntity().getUsId());
             if (encoder.matches(form.toEntity().getPassword(),finder.get(0).getPassword())) {
                 try {
                     session.setAttribute("user",form.toEntity().getUsId());
-                    String encodedPw = encoder.encode(form.toEntity().getPassword());
+                    encodedPw = encoder.encode(form.toEntity().getPassword());
                     session.setAttribute("pw",encodedPw);
                 } catch (IllegalStateException e) {
                     return "redirect:/Login?SessionState="+"SessionOut";
                 }
                 model.addAttribute("userId", form.toEntity().getUsId());
-                userRepository.save(form.toEntity());
+                userRepository.save(form.toEntity(encodedPw));
                 return "List";
             }
         }

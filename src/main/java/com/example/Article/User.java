@@ -21,7 +21,9 @@ public class User {
         this.usId = usId;
         this.password = password;
     }
-
+    public void setPassword(String password) {
+        this.password = password;
+    }
     @Override
     public String toString() {
         return "User{" +

@@ -64,7 +64,7 @@ public class ArticleController {
         // 체크인
         if (userRepository.existsByUsId(form.toEntity().getUsId())) {
             List<User> finder = userRepository.findByUsId(form.toEntity().getUsId());
-            if (encoder.matches(finder.get(0).getPassword(),form.toEntity().getPassword())) {
+            if (encoder.matches(form.toEntity().getPassword(),finder.get(0).getPassword())) {
                 try {
                     session.setAttribute("user",form.toEntity().getUsId());
                     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -163,7 +163,7 @@ public class ArticleController {
             return "redirect:/Login?SessionState="+"SessionOut";
         }
         Optional<Article> now = articleRepository.findById(deleteId);
-        if (now.get().getUsId().equals(userObj) &&  encoder.matches(now.get().getPassword(),(String)pwObj)) {
+        if (now.get().getUsId().equals(userObj) &&  encoder.matches((String)pwObj,now.get().getPassword())) {
             articleRepository.deleteById(deleteId);
             System.out.println(articleRepository.findAll());
             int PageValue = articleRepository.findByRoomId(RoomId).size()/5;
@@ -241,7 +241,7 @@ public class ArticleController {
             return "redirect:/Login?SessionState="+"SessionOut";
         }
         Optional<Article> now = articleRepository.findById(ModifyId); // 해당 아이디의 게시물 GET
-        if (now.get().getUsId().equals(userObj) && encoder.matches(now.get().getPassword(),(String)pwObj)) {
+        if (now.get().getUsId().equals(userObj) && encoder.matches((String)pwObj,now.get().getPassword())) {
             now.get().update(form.getRoomId(), form.getTitle(), form.getNews());
             articleRepository.save(now.get());
             System.out.println(articleRepository.findAll());

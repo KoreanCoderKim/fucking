@@ -22,7 +22,7 @@ public class ArticleDto {
         this.News = News;
     }
 
-    public Article toEntity(String Data, String usId, int password) {
+    public Article toEntity(String Data, String usId, String password) {
         return new Article(null, usId, password, Data, title, News);
     }
 }

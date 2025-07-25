@@ -211,7 +211,8 @@ public class ArticleController {
         else if (pwObj == null) {
             return "redirect:/Login?SessionState="+"SessionOut";
         }
-        Article article = form.toEntity(RoomId, (String) userObj, (String) pwObj);
+        String pww = (String) pwObj;
+        Article article = form.toEntity(RoomId, (String) userObj, encoder.encode(pww));
         articleRepository.save(article);
         System.out.println(articleRepository.findAll());
         model.addAttribute("Id", RoomId);

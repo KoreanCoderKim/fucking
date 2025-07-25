@@ -1,5 +1,6 @@
 package com.example.Article;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +38,9 @@ public class ArticleController {
         if (!userRepository.existsByUsId(form.toEntity().getUsId())) {
             try {
                 session.setAttribute("user",form.toEntity().getUsId());
-                session.setAttribute("pw",form.toEntity().getPassword().hashCode());
+                BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+                String encodedPw = encoder.encode(form.getPassword());
+                session.setAttribute("pw",encodedPw);
             } catch (IllegalStateException e) {
                 return "redirect:/SignUp?SessionState="+"SessionOut";
             }
@@ -61,10 +64,12 @@ public class ArticleController {
         // 체크인
         if (userRepository.existsByUsId(form.toEntity().getUsId())) {
             List<User> finder = userRepository.findByUsId(form.toEntity().getUsId());
-            if (finder.get(0).getPassword().hashCode() == form.toEntity().getPassword().hashCode()) {
+            if (encoder.matches(finder.get(0).getPassword(),form.toEntity().getPassword())) {
                 try {
                     session.setAttribute("user",form.toEntity().getUsId());
-                    session.setAttribute("pw",form.toEntity().getPassword().hashCode());
+                    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+                    String encodedPw = encoder.encode(form.getPassword());
+                    session.setAttribute("pw",encodedPw);
                 } catch (IllegalStateException e) {
                     return "redirect:/Login?SessionState="+"SessionOut";
                 }
@@ -158,7 +163,7 @@ public class ArticleController {
             return "redirect:/Login?SessionState="+"SessionOut";
         }
         Optional<Article> now = articleRepository.findById(deleteId);
-        if (now.get().getUsId().equals(userObj) &&  now.get().getPassword() == (int) pwObj) {
+        if (now.get().getUsId().equals(userObj) &&  encoder.matches(now.get().getPassword(),(String)pwObj)) {
             articleRepository.deleteById(deleteId);
             System.out.println(articleRepository.findAll());
             int PageValue = articleRepository.findByRoomId(RoomId).size()/5;
@@ -201,7 +206,7 @@ public class ArticleController {
         else if (pwObj == null) {
             return "redirect:/Login?SessionState="+"SessionOut";
         }
-        Article article = form.toEntity(RoomId, (String) userObj, (int) pwObj);
+        Article article = form.toEntity(RoomId, (String) userObj, (String) pwObj);
         articleRepository.save(article);
         System.out.println(articleRepository.findAll());
         model.addAttribute("Id", RoomId);
@@ -236,7 +241,7 @@ public class ArticleController {
             return "redirect:/Login?SessionState="+"SessionOut";
         }
         Optional<Article> now = articleRepository.findById(ModifyId); // 해당 아이디의 게시물 GET
-        if (now.get().getUsId().equals(userObj) && now.get().getPassword() == (int) pwObj) {
+        if (now.get().getUsId().equals(userObj) && encoder.matches(now.get().getPassword(),(String)pwObj)) {
             now.get().update(form.getRoomId(), form.getTitle(), form.getNews());
             articleRepository.save(now.get());
             System.out.println(articleRepository.findAll());

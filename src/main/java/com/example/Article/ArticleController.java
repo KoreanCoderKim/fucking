@@ -48,7 +48,7 @@ public class ArticleController {
             model.addAttribute("userId", form.toEntity().getUsId());
             User user = form.toEntity();
             user.setPassword(encodedPw);
-            userRepository.save(form.toEntity());
+            userRepository.save(user);
             return "List";
         }
         return "redirect:/SignUp?SessionState=Good";
@@ -79,7 +79,7 @@ public class ArticleController {
                 model.addAttribute("userId", form.toEntity().getUsId());
                 User user = form.toEntity();
                 user.setPassword(encodedPw);
-                userRepository.save(form.toEntity());
+                userRepository.save(user);
                 return "List";
             }
         }

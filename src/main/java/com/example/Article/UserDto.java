@@ -4,7 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
+import lombok.Setter;
 @Setter
 @Table(name="Us")
 public class UserDto {

@@ -100,6 +100,8 @@ public class ArticleController {
     @PostMapping("/Process")
     public String GO(PosDto form) {
         int PageValue = articleRepository.findByRoomId(form.getRoomId()).size()/5;
+        if (PageValue == 0)
+            PageValue = 1;
         if (roomRepository.existsByRoomId(form.getRoomId()))
             return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue;
         return "redirect:/In";
@@ -112,7 +114,11 @@ public class ArticleController {
         for (int i = 1; i <= PageValue; i++) {
             Pages.add(i);
         }
-        List<Article> articles = articleRepository.findByRoomId(RoomId).subList((Page-1)*5, (Page*5)-1);
+        List<Article> articles = List.of();
+        if (articleRepository.findByRoomId(RoomId).size()-1 < (Page*5)-1)
+            articles = articleRepository.findByRoomId(RoomId).subList((Page-1)*5, articleRepository.findByRoomId(RoomId).size()-1);
+        else if (articleRepository.findByRoomId(RoomId).size()-1 >= (Page*5)-1)
+            articles = articleRepository.findByRoomId(RoomId).subList((Page-1)*5, (Page*5)-1);
         if (roomRepository.existsByRoomId(RoomId)) {
             model.addAttribute("Data", articles);
             model.addAttribute("Id", RoomId);

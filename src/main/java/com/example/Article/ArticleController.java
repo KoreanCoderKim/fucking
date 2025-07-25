@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @Controller
 public class ArticleController {
+     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     // 게시물 관리소
     @Autowired
     private ArticleRepository articleRepository;
@@ -38,7 +39,6 @@ public class ArticleController {
         if (!userRepository.existsByUsId(form.toEntity().getUsId())) {
             try {
                 session.setAttribute("user",form.toEntity().getUsId());
-                BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
                 String encodedPw = encoder.encode(form.toEntity().getPassword());
                 session.setAttribute("pw",encodedPw);
             } catch (IllegalStateException e) {
@@ -67,7 +67,6 @@ public class ArticleController {
             if (encoder.matches(form.toEntity().getPassword(),finder.get(0).getPassword())) {
                 try {
                     session.setAttribute("user",form.toEntity().getUsId());
-                    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
                     String encodedPw = encoder.encode(form.toEntity().getPassword());
                     session.setAttribute("pw",encodedPw);
                 } catch (IllegalStateException e) {
@@ -147,7 +146,6 @@ public class ArticleController {
     // 게시글 삭제(PostMapping)
     @PostMapping("/delete")
     public String deleted(@RequestParam Long deleteId, @RequestParam String RoomId, HttpSession session) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         Object userObj = null;
         Object pwObj = null;
         try {
@@ -226,7 +224,6 @@ public class ArticleController {
     // 게시글 수정(PostMapping)
     @PostMapping("/Modifying")
     public String Modify(ChanDto form,@RequestParam Long ModifyId, HttpSession session) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         Object userObj = null;
         Object pwObj = null;
         try {

@@ -46,7 +46,9 @@ public class ArticleController {
                 return "redirect:/SignUp?SessionState="+"SessionOut";
             }
             model.addAttribute("userId", form.toEntity().getUsId());
-            userRepository.save(form.toEntity(encodedPw));
+            User user = form.toEntity();
+            user.setPassword(encodedPw);
+            userRepository.save(form.toEntity());
             return "List";
         }
         return "redirect:/SignUp?SessionState=Good";
@@ -75,7 +77,9 @@ public class ArticleController {
                     return "redirect:/Login?SessionState="+"SessionOut";
                 }
                 model.addAttribute("userId", form.toEntity().getUsId());
-                userRepository.save(form.toEntity(encodedPw));
+                User user = form.toEntity();
+                user.setPassword(encodedPw);
+                userRepository.save(form.toEntity());
                 return "List";
             }
         }

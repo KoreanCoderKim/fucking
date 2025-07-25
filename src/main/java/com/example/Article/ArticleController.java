@@ -122,6 +122,8 @@ public class ArticleController {
     public String App(Model model, @RequestParam String RoomId, @RequestParam int Page) {
         int PageValue = articleRepository.findByRoomId(RoomId).size()/5+1;
         List<Integer> Pages = new java.util.ArrayList<>(List.of());
+        if (articleRepository.findByRoomId(RoomId).size() % 5 == 0)
+            PageValue -= 1;
         for (int i = 1; i <= PageValue; i++) {
             Pages.add(i);
         }

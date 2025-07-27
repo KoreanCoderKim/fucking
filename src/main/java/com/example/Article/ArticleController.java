@@ -268,6 +268,7 @@ public class ArticleController {
     @GetMapping("/Inside")
     public String Inside(@RequestParam Long id, Model model) {
         model.addAttribute("data", articleRepository.findById(id));
+        model.addAttribute("Id", RoomId);
         return "Clip";
     }
 }

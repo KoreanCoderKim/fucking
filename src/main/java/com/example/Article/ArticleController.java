@@ -267,7 +267,8 @@ public class ArticleController {
     }
     @GetMapping("/Inside")
     public String Inside(@RequestParam Long id, Model model) {
-        model.addAttribute("data", articleRepository.findById(id));
+        Optional<Article> article = articleRepository.findById(id);
+        model.addAttribute("data", article.get().getNews());
         return "Clip";
     }
 }

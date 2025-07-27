@@ -265,4 +265,9 @@ public class ArticleController {
             return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue;
         return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue2;
     }
+    @GetMapping("/Inside")
+    public String Inside(@RequestParam Long id, Model model) {
+        model.addAttribute("data", articleRepository.findById(id));
+        return "Clip";
+    }
 }

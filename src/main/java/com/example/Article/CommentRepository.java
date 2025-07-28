@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface CommentRepository extends CrudRepository<Comment, Long> {
     List<Comment> findByArticleId(Long articleId);
-    List<Comment> findByUsName(Long usName);
+    List<Comment> findByUsName(String usName);
 }

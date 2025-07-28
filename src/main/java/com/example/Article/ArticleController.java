@@ -314,15 +314,16 @@ public class ArticleController {
         return "redirect:/Main";
     }
     @GetMapping("/Comment")
-    public String commented() {
+    public String commented(@RequestParam Long articleId, Model model) {
+        model.addAttribute("ai",articleId);
         return "Comment";
     }
     @PostMapping("/Commented")
-    public String commneting(@RequestParam Long articleId, CommentDto form) {
-        form.setArticleId(articleId);
+    public String commneting(@RequestParam Long aid, CommentDto form) {
+        form.setArticleId(aid);
         Comment comment = form.toEntity();
         commentRepository.save(comment);
-        Optional<Article> article = articleRepository.findById(articleId);
+        Optional<Article> article = articleRepository.findById(aid);
         String RoomId = article.get().getRoomId();
         return "redirect:index?RoomId="+RoomId+"&Page=1";
     }

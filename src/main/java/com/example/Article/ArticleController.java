@@ -284,6 +284,7 @@ public class ArticleController {
     public String Inside(@RequestParam Long id, Model model) {
         Optional<Article> article = articleRepository.findById(id);
         List<Comment> comment = commentRepository.findByArticleId(id);
+        model.addAttribute("ID", id);
         model.addAttribute("data", article.get().getNews());
         model.addAttribute("data2", comment);
         return "Clip";

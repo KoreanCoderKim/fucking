@@ -4,7 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
-@NoArgsConstuctor
+@NoArgsConstructor
 @Entity
 @Getter
 public class Comment {

@@ -1,1 +1,40 @@
-
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>대댓글 조회</title>
+</head>
+<style>
+    body {
+        background-color: honeydew;
+    }
+    textarea {
+        background-color: antiquewhite;
+    }
+</style>
+<body>
+    <h1>대댓글보기</h1>
+    {{#Repping}}
+        <p>{{usName}}</p><br>
+        <p>{{replyValue}}</p>
+    {{/Repping}}
+    <script>
+      // 5분마다 서버에 요청 보내기
+      setInterval(() => {
+        fetch('/session-ping', {
+          method: 'POST',
+          credentials: 'include'  // 세션 쿠키 포함
+        }).then(res => {
+          if (res.ok) {
+            console.log("세션 연장 성공");
+          }
+          if (!res.ok) {
+            console.warn("세션 연장 실패");
+          }
+        }).catch(err => {
+          console.error("서버 연결 실패", err);
+        });
+      }, 5 * 60 * 1000); // 5분마다
+    </script>
+</body>
+</html>

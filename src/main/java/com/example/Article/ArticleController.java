@@ -346,7 +346,7 @@ public class ArticleController {
     }
     @GetMapping("/Rep")
     public String Reper(@RequestParam Long AcceptId, Model model) {
-        model.addAttribute("Repping",replyRepository.findByCommentId(Keys);
+        model.addAttribute("Repping",replyRepository.findByCommentId(AcceptId));
         return "ReplyResult";
     }
 }

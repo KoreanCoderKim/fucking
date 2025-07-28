@@ -274,5 +274,13 @@ public class ArticleController {
     @PostMapping("/DeleteUser")
     public String DeleteUser(HttpSession session) {
         Object usId = session.getAttribute("user");
-        
+        List<User> userdomain = userRepository.findByUsId((String) usId);
+        List<Article> article = articleRepository.findByUsId((String) usId);
+        for (Article can : article) {
+            can.NotAcceptedUser();
+            can.setUserName("탈퇴한 회원"+can.getId());
+        }
+        userRepository.deleteById(userdomain.getId());
+        return "mainindex";
+    }
 }

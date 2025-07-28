@@ -37,6 +37,7 @@ public class Article {
         this.News = News;
         this.title = title;
     }
+    public boolean getIsMode() { return isMode; }
     public void setUserName(String usId) { this.usId = usId; }
     @Override
     public String toString() {

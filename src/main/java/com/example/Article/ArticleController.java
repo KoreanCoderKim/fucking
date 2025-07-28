@@ -271,4 +271,8 @@ public class ArticleController {
         model.addAttribute("data", article.get().getNews());
         return "Clip";
     }
+    @PostMapping("/DeleteUser")
+    public String DeleteUser(HttpSession session) {
+        Object usId = session.getAttribute("user");
+        
 }

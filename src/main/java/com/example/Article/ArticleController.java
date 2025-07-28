@@ -289,7 +289,7 @@ public class ArticleController {
         List<Article> article = articleRepository.findByUsId((String) usId);
         for (Article can : article) {
             can.NotAcceptedUser();
-            can.setUserName("탈퇴한 회원"+can.getId());
+            can.setUserName("탈퇴한 회원"+can.get(0).getId());
         }
         userRepository.deleteById(userdomain.getId());
         return "redirect:/Main";

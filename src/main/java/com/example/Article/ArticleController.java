@@ -287,6 +287,8 @@ public class ArticleController {
         Object usId = session.getAttribute("user");
         List<User> userdomain = userRepository.findByUsId((String) usId);
         List<Article> article = articleRepository.findByUsId((String) usId);
+        System.out.println(userdomain);
+        System.out.println(article);
         for (Article can : article) {
             can.NotAcceptedUser();
             can.setUserName("탈퇴한 회원");

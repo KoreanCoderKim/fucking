@@ -25,7 +25,7 @@ public class Comment {
         this.commentValue = commentValue;
         this.usName = usName;
     }
-    public setUsName(String usName) { this.usName = usName; }
+    public void setUsName(String usName) { this.usName = usName; }
     @Override
     public String toString() {
         return "Comment{" +

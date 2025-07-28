@@ -4,6 +4,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
+@NoArgsConstuctor
+@Entity
+@Getter
 public class Comment {
     @Id
     @GeneratedValue
@@ -22,7 +25,7 @@ public class Comment {
         this.commentValue = commentValue;
         this.usName = usName;
     }
-
+    public setUsName(String usName) { this.usName = usName; }
     @Override
     public String toString() {
         return "Comment{" +

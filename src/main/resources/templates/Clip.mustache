@@ -35,35 +35,32 @@
 </header>
 <body>
     <p>{{data}}</p>
-<script>
-      // 5분마다 서버에 요청 보내기
-      setInterval(() => {
-        fetch('/session-ping', {
-          method: 'POST',
-          credentials: 'include'  // 세션 쿠키 포함
-        }).then(res => {
-          if (res.ok) {
-            console.log("세션 연장 성공");
-          }
-          if (!res.ok) {
-            console.warn("세션 연장 실패");
-          }
-        }).catch(err => {
-          console.error("서버 연결 실패", err);
-        });
-      }, 5 * 60 * 1000); // 5분마다
-</script>
+    {{#data2}}
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <p>-------댓글------</p><br>
+            <p>{{commentValue}}</p><br>
+        </div>
+        <a href="https://port-0-fucking-m7oxoza4fc9682d2.sel4.cloudtype.app/Comment?articleId={{ID}}">댓글 달기 </a>
+        <a href="https://port-0-fucking-m7oxoza4fc9682d2.sel4.cloudtype.app/Reply?AcceptId={{commentId}}">대댓 달기 </a>
+        <a href="https://port-0-fucking-m7oxoza4fc9682d2.sel4.cloudtype.app/Rep?AcceptId={{commentId}}">대댓글 보기</a>
+    {{/data2}}
+    <script>
+          // 5분마다 서버에 요청 보내기
+          setInterval(() => {
+            fetch('/session-ping', {
+              method: 'POST',
+              credentials: 'include'  // 세션 쿠키 포함
+            }).then(res => {
+              if (res.ok) {
+                console.log("세션 연장 성공");
+              }
+              if (!res.ok) {
+                console.warn("세션 연장 실패");
+              }
+            }).catch(err => {
+              console.error("서버 연결 실패", err);
+            });
+          }, 5 * 60 * 1000); // 5분마다
+    </script>
 </body>
-<footer>
-    <p>댓글</p><br>
-</footer>
-{{#data2}}
-    <div style="display: flex; align-items: center; gap: 10px;">
-        <p>----------------</p><br>
-        <p>{{commentValue}}</p><br>
-    </div>
-    <a href="https://port-0-fucking-m7oxoza4fc9682d2.sel4.cloudtype.app/Comment?articleId={{ID}}">댓글 달기 </a>
-    <a href="https://port-0-fucking-m7oxoza4fc9682d2.sel4.cloudtype.app/Reply?AcceptId={{commentId}}">대댓 달기 </a>
-    <a href="https://port-0-fucking-m7oxoza4fc9682d2.sel4.cloudtype.app/Rep?AcceptId={{commentId}}">대댓글 보기</a>
-{{/data2}}
 </html>

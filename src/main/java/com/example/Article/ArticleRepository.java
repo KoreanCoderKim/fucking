@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface ArticleRepository extends JpaRepository<Article, Long> {
     List<Article> findByRoomId(String RoomId);
+    List<Article> findByUsId(String usId);
 }

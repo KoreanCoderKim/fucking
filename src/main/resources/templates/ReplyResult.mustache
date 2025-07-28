@@ -13,12 +13,11 @@
     }
 </style>
 <body>
-    <h1>대댓글보기</h1>
-    {{#Repping}}
-        <p>{{usName}}</p><br>
-        <p>{{replyValue}}</p>
-    {{/Repping}}
-    <script>
+{{#Repping}}
+    <p>{{usName}}</p><br>
+    <p>{{replyValue}}</p>
+{{/Repping}}
+<script>
       // 5분마다 서버에 요청 보내기
       setInterval(() => {
         fetch('/session-ping', {
@@ -35,6 +34,6 @@
           console.error("서버 연결 실패", err);
         });
       }, 5 * 60 * 1000); // 5분마다
-    </script>
+</script>
 </body>
 </html>

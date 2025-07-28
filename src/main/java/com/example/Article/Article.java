@@ -49,7 +49,7 @@ public class Article {
                 ", News='" + News + '\'' +
                 '}';
     }
-
+    public void NotAcceptedUser() { isMode = false; }
     public void update(String roomId, String title, String News) {
         this.roomId = roomId;
         this.title = title;

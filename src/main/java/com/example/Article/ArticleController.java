@@ -15,10 +15,8 @@ import java.util.*;
 @Controller
 public class ArticleController {
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-    // 게시물 관리소
     @Autowired
     private ArticleRepository articleRepository;
-    // 방번호 저장소
     @Autowired
     private RoomRepository roomRepository;
     @Autowired
@@ -112,10 +110,11 @@ public class ArticleController {
     }
     // 방 입장(PostMapping)
     @PostMapping("/Process")
-    public String GO(PosDto form) {
+    public String GO(PosDto form,HttpSession session) {
         int PageValue = articleRepository.findByRoomId(form.getRoomId()).size()/5;
         int PageValue2 = articleRepository.findByRoomId(form.getRoomId()).size()/5+1;
         if (roomRepository.existsByRoomId(form.getRoomId())) {
+            session.setAttribute("Room",form.getRoomId());
             if (articleRepository.findByRoomId(form.getRoomId()).size() % 5 == 0)
                 return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue;
             return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue2;
@@ -340,10 +339,9 @@ public class ArticleController {
         form.setCommentId(commentId);
         Reply reply = form.toEntity();
         replyRepository.save(reply);
-        Optional<Article> article = articleRepository.findById(commentId);
-        String RoomId = article.get().getRoomId();
-        return "redirect:index?RoomId="+RoomId+"&Page=1";
+        return "redirect:index?RoomId="+(String)session.getAttribute("Room")+"&Page=1";
     }
+    
     @GetMapping("/Rep")
     public String Reper(@RequestParam Long AcceptId, Model model) {
         model.addAttribute("Repping",replyRepository.findByCommentId(AcceptId));

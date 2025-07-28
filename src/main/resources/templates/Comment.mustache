@@ -16,6 +16,7 @@
     <h1>댓글 달기</h1>
     <form action="/Commented" method="post">
         <p>댓글</p><br>
+        <input type="hidden" name="aid" value={{ai}}>
         <textarea rows="3" name="commentValue"></textarea>
         <button type="submit" class="btn btn-primary">제출하기</button>
     </form>

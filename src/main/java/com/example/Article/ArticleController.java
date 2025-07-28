@@ -154,6 +154,10 @@ public class ArticleController {
     // 게시글 삭제(PostMapping)
     @PostMapping("/delete")
     public String deleted(@RequestParam Long deleteId, @RequestParam String RoomId, HttpSession session) {
+        Optional<Article> article = articleRepository.findById(deleteId);
+        if (!article.get().getIsMode()) {
+            return "redirect/In";
+        }
         Object userObj = null;
         Object pwObj = null;
         try {
@@ -227,8 +231,13 @@ public class ArticleController {
     // 게시글 수정(GetMapping)
     @GetMapping("/Change")
     public String Change(Model model, @RequestParam Long ModifyId) {
-        model.addAttribute("MI",ModifyId);
-        return "Modifyed";
+        Optional<Article> article = articleRepository.findById(ModifyId);
+        if (article.get().getIsMode()) {
+            model.addAttribute("MI",ModifyId);
+            return "Modifyed";
+        } else {
+            return "redirect/In";
+        }
     }
     // 게시글 수정(PostMapping)
     @PostMapping("/Modifying")
@@ -265,13 +274,15 @@ public class ArticleController {
             return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue;
         return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue2;
     }
+    // 자세히 보기
     @GetMapping("/Inside")
     public String Inside(@RequestParam Long id, Model model) {
         Optional<Article> article = articleRepository.findById(id);
         model.addAttribute("data", article.get().getNews());
         return "Clip";
     }
-    @PostMapping("/DeleteUser")
+    // 유저 탈퇴
+    @GetMapping("/DeleteUser")
     public String DeleteUser(HttpSession session) {
         Object usId = session.getAttribute("user");
         List<User> userdomain = userRepository.findByUsId((String) usId);

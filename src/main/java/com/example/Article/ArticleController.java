@@ -292,6 +292,6 @@ public class ArticleController {
             can.setUserName("탈퇴한 회원"+can.getId());
         }
         userRepository.deleteById(userdomain.getId());
-        return "mainindex";
+        return "redirect:/Main";
     }
 }

@@ -309,12 +309,10 @@ public class ArticleController {
         userRepository.deleteById(userdomain.get(0).getId());
         return "redirect:/Main";
     }
-
     @GetMapping("/Comment")
     public String commented() {
         return "Comment";
     }
-
     @PostMapping("/Commented")
     public String commneting(@RequestParam Long articleId, CommentDto form) {
         form.setArticleId(articleId);
@@ -324,12 +322,11 @@ public class ArticleController {
         String RoomId = article.get().getRoomId();
         return "redirect:index?RoomId="+RoomId+"&Page=1";
     }
-
     @GetMapping("/Reply")
-    public String Replied() {
+    public String Replied(@RequestParam Long AcceptId, Model model) {
+        model.addAttribute("Ci",AcceptId);
         return "Reply";
     }
-
     @PostMapping("/Replied")
     public String Replying(@RequestParam Long commentId, ReplyDto form) {
         form.setCommentId(commentId);
@@ -338,5 +335,10 @@ public class ArticleController {
         Optional<Article> article = articleRepository.findById(commentId);
         String RoomId = article.get().getRoomId();
         return "redirect:index?RoomId="+RoomId+"&Page=1";
+    }
+    @GetMapping("/Rep")
+    public String Reper(@RequestParam Long AcceptId, Model model) {
+        model.addAttribute("Repping",replyRepository.findCommentId(AcceptId));
+        return "ReplyResult";
     }
 }

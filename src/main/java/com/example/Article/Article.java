@@ -27,6 +27,8 @@ public class Article {
     private String title;
     @Column
     private String News;
+    @Column
+    private boolean isMode = true;
     public Article(Long id, String usId, String password, String roomId, String title, String News) {
         this.id = id;
         this.roomId = roomId;

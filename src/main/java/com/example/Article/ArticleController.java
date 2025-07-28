@@ -23,6 +23,10 @@ public class ArticleController {
     private RoomRepository roomRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ReplyRepository replyRepository;
+    @Autowired
+    private CommentRepository commentRepository;
     @GetMapping("/Main")
     public String M() { return "mainindex"; }
     @GetMapping("/SignUp")

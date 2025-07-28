@@ -1,5 +1,5 @@
 package com.example.Article;
-
+import lombok.Getter;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

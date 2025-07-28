@@ -278,6 +278,7 @@ public class ArticleController {
     @GetMapping("/Inside")
     public String Inside(@RequestParam Long id, Model model) {
         Optional<Article> article = articleRepository.findById(id);
+        Optional<Comment> comment = commentRepository.findByArticleId(id);
         model.addAttribute("data", article.get().getNews());
         return "Clip";
     }
@@ -287,13 +288,53 @@ public class ArticleController {
         Object usId = session.getAttribute("user");
         List<User> userdomain = userRepository.findByUsId((String) usId);
         List<Article> article = articleRepository.findByUsId((String) usId);
+        List<Comment> comment = commentRepository.findByUsName((String) usId);
+        List<Reply> reply = replyRepository.findByUsName((String) usId);
         System.out.println(userdomain);
         System.out.println(article);
         for (Article can : article) {
             can.NotAcceptedUser();
             can.setUserName("탈퇴한 회원");
         }
+        for (Comment can : comment) {
+            can.NotAcceptedReply();
+            can.setUsName("탈퇴한 회원");
+        }
+        for (Reply can : reply) {
+            can.NotAcceptedReply();
+            can.setUsName("탈퇴한 회원");
+        }
         userRepository.deleteById(userdomain.get(0).getId());
         return "redirect:/Main";
+    }
+
+    @GetMapping("/Comment")
+    public String commented() {
+        return "Comment";
+    }
+
+    @PostMapping("/Commented")
+    public String commneting(@RequestParam Long articleId, CommentDto form) {
+        form.setArticleId(articleId);
+        Comment comment = form.toEntity();
+        commentRepository.save(comment);
+        Optional<Article> article = articleRepository.findById(articleId);
+        String RoomId = article.get().getRoomId();
+        return "redirect:index?RoomId="+RoomId+"&Page=1";
+    }
+
+    @GetMapping("/Reply")
+    public String Replied() {
+        return "Reply";
+    }
+
+    @PostMapping("/Replied")
+    public String Replying(@RequestParam Long commentId, ReplyDto form) {
+        form.setCommentId(commentId);
+        Reply reply = form.toEntity();
+        replyRepository.save(reply);
+        Optional<Article> article = articleRepository.findById(commentId);
+        String RoomId = article.get().getRoomId();
+        return "redirect:index?RoomId="+RoomId+"&Page=1";
     }
 }

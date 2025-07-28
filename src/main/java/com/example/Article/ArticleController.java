@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class ArticleController {
@@ -278,8 +279,9 @@ public class ArticleController {
     @GetMapping("/Inside")
     public String Inside(@RequestParam Long id, Model model) {
         Optional<Article> article = articleRepository.findById(id);
-        Optional<Comment> comment = commentRepository.findByArticleId(id);
+        List<Comment> comment = commentRepository.findByArticleId(id);
         model.addAttribute("data", article.get().getNews());
+        model.addAttribute("data2", comment);
         return "Clip";
     }
     // 유저 탈퇴

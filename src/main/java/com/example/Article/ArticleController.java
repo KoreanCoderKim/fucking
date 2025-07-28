@@ -320,7 +320,8 @@ public class ArticleController {
         return "Comment";
     }
     @PostMapping("/Commented")
-    public String commneting(@RequestParam Long aid, CommentDto form) {
+    public String commneting(@RequestParam Long aid, CommentDto form, HttpSession session) {
+        form.setUsName(session.getAttribute("user"));
         form.setArticleId(aid);
         Comment comment = form.toEntity();
         commentRepository.save(comment);
@@ -334,7 +335,8 @@ public class ArticleController {
         return "Reply";
     }
     @PostMapping("/Replied")
-    public String Replying(@RequestParam Long commentId, ReplyDto form) {
+    public String Replying(@RequestParam Long commentId, ReplyDto form, HttpSession session) {
+        form.setUsName(session.getAttribute("user"));
         form.setCommentId(commentId);
         Reply reply = form.toEntity();
         replyRepository.save(reply);

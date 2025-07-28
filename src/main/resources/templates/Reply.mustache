@@ -16,6 +16,7 @@
     <h1>댓글 달기</h1>
     <form action="/Replied" method="post">
         <p>대댓글</p><br>
+        <input type="hidden" name="commentId" value={{Ci}}>
         <textarea rows="3" name="replyValue"></textarea>
         <button type="submit" class="btn btn-primary">제출하기</button>
     </form>

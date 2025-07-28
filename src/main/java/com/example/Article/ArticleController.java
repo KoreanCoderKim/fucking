@@ -289,9 +289,9 @@ public class ArticleController {
         List<Article> article = articleRepository.findByUsId((String) usId);
         for (Article can : article) {
             can.NotAcceptedUser();
-            can.setUserName("탈퇴한 회원"+can.get(0).getId());
+            can.setUserName("탈퇴한 회원"+can.getId());
         }
-        userRepository.deleteById(userdomain.getId());
+        userRepository.deleteById(userdomain.get(0).getId());
         return "redirect:/Main";
     }
 }

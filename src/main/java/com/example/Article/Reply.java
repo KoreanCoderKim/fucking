@@ -25,7 +25,7 @@ public class Reply {
         this.replyValue = replyValue;
         this.usName = usName;
     }
-
+    public void setUsName(String usName) { this.usName=usName; }
     @Override
     public String toString() {
         return "Reply{" +

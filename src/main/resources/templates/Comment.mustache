@@ -1,1 +1,42 @@
-
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>회원 가입</title>
+</head>
+<style>
+    body {
+        background-color: honeydew;
+    }
+    textarea {
+        background-color: antiquewhite;
+    }
+</style>
+<body>
+    <p>현재 세션 상황: {{State}}</p>
+    <h1>댓글 달기</h1>
+    <form action="/Commenting" method="post">
+        <p>댓글</p><br>
+        <textarea rows="3" name="commentValue"></textarea>
+        <button type="submit" class="btn btn-primary">제출하기</button>
+    </form>
+    <script>
+      // 5분마다 서버에 요청 보내기
+      setInterval(() => {
+        fetch('/session-ping', {
+          method: 'POST',
+          credentials: 'include'  // 세션 쿠키 포함
+        }).then(res => {
+          if (res.ok) {
+            console.log("세션 연장 성공");
+          }
+          if (!res.ok) {
+            console.warn("세션 연장 실패");
+          }
+        }).catch(err => {
+          console.error("서버 연결 실패", err);
+        });
+      }, 5 * 60 * 1000); // 5분마다
+    </script>
+</body>
+</html>

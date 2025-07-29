@@ -347,4 +347,26 @@ public class ArticleController {
         model.addAttribute("Repping",replyRepository.findByCommentId(AcceptId));
         return "ReplyResult";
     }
+    // // cid는 댓글 번호, postid는 게시글 번호
+    // @GetMapping("/CommentDelete")
+    // public String CD(@RequestParam Long Postid, @RequestParam Long cid) {
+    //     Optional<Comment> comment = commentRepository.findById(cid);
+    //     if(comment.get().getisMode()) {
+    //         comment.setCommentValue("삭제된 댓글입니다.");
+    //         return "redirect:/Inside?id="+Postid;
+    //     }
+    //     return "redirect:/In";
+    // }
+    // // replyId 는 대댓 번호
+    // @GetMapping("/ReplyDelete")
+    // public String CD(@RequestParam Long replyid) {
+    //     Optional<Replt> reply = replyRepository.findById(replyid);
+    //     Long cid = reply.get().getCommentId();
+    //     Optional<Comment> comment = commentRepository.findById(cid);
+    //     if(reply.get().getisMode()) {
+    //         reply.setcommentValue("삭제된 댓글입니다.");
+    //         return "redirect:/Inside?id="+comment.get().getArticleId();
+    //     }
+    //     return "redirect:/In";
+    // }
 }

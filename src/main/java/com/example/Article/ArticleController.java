@@ -284,6 +284,7 @@ public class ArticleController {
         Optional<Article> article = articleRepository.findById(id);
         List<Comment> comment = commentRepository.findByArticleId(id);
         model.addAttribute("ID", id);
+        model.addAttribute("CU", article.get().getUsId());
         model.addAttribute("data", article.get().getNews());
         model.addAttribute("data2", comment);
         return "Clip";

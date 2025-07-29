@@ -40,15 +40,15 @@
     <div style="display: flex; align-items: center; gap: 10px;">
         <p>유저의 메시지: {{commentValue}}</p><br>
     </div>
-    <iframe id="replyFrame" src="https://port-0-fucking-m7oxoza4fc9682d2.sel4.cloudtype.app/Rep?AcceptId={{id}}" width="100%" style="border: none;" onload="sendHeight()" scrolling="no"></iframe
+    <iframe id="replyFrame" src="/Rep?AcceptId={{id}}" width="100%" style="border: none;" onload="resizeIframe()" scrolling="no"></iframe>
     <a href="https://port-0-fucking-m7oxoza4fc9682d2.sel4.cloudtype.app/Reply?AcceptId={{id}}">대댓 달기 </a>
 {{/data2}}
 <script>
-  function sendHeight() {
-    const height = document.body.scrollHeight;
-    window.parent.postMessage({ type: "resize", height: height }, "*");
-  }
-  window.onload = sendHeight;
+  window.addEventListener("message", (event) => {
+    if (event.data.type === "resize" && event.data.height) {
+      document.getElementById("replyFrame").style.height = event.data.height + "px";
+    }
+  });
 </script>
 <script>
           // 5분마다 서버에 요청 보내기

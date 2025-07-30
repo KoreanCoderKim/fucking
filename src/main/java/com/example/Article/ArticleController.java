@@ -160,7 +160,7 @@ public class ArticleController {
     public String deleted(@RequestParam Long deleteId, @RequestParam String RoomId, HttpSession session) {
         Optional<Article> article = articleRepository.findById(deleteId);
         if (!article.get().getIsMode()) {
-            return "redirect/In";
+            return "redirect:/In";
         }
         Object userObj = null;
         Object pwObj = null;
@@ -240,7 +240,7 @@ public class ArticleController {
             model.addAttribute("MI",ModifyId);
             return "Modifyed";
         } else {
-            return "redirect/In";
+            return "redirect:/In";
         }
     }
     // 게시글 수정(PostMapping)

@@ -1,71 +1,96 @@
 <!DOCTYPE html>
 <html lang="ko">
-<header>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>상세히 보기</title>
-</header>
-<style>
-    body {
-        background-color: skyblue;
-        width: auto;
-        height: auto;
-        color: greenyellow;
-        text-shadow: 0.01cm 0.04cm green;
-    }
-    header {
-        background-color: skyblue;
-        width: auto;
-        height: auto;
-        color: burlywood;
-    }
-    h1 {
-      text-shadow: 0.01cm 0.1cm rgb(182, 98, 38);
-    }
-    a {
-        color: beige;
-        text-decoration-line: none;
-        text-shadow: 0.01cm 0.04cm black;
-    }
-</style>
+    <style>
+        body {
+            background-color: skyblue;
+            width: auto;
+            height: auto;
+            color: greenyellow;
+            text-shadow: 0.01cm 0.04cm green;
+        }
+        header {
+            background-color: skyblue;
+            width: auto;
+            height: auto;
+            color: burlywood;
+        }
+        h1 {
+            text-shadow: 0.01cm 0.1cm rgb(182, 98, 38);
+        }
+        a {
+            color: beige;
+            text-decoration-line: none;
+            text-shadow: 0.01cm 0.04cm black;
+        }
+    </style>
+</head>
+<body>
 <header>
     <a href="https://port-0-fucking-m7oxoza4fc9682d2.sel4.cloudtype.app/Main">로그아웃</a><br>
     <h1>내용</h1>
     <h1>{{data}}</h1><br>
 </header>
-<body>
+
 {{#data2}}
-    <div style="display: flex; align-items: center; gap: 10px;">
+    <div style="display: flex; align-items: center; gap: 10px; flex-direction: column;">
         <p>{{usName}}의 메시지: {{commentValue}}</p>
+
+        <button onclick="toggleReply('{{id}}')">대댓글 보기</button>
+        
+        <iframe 
+            id="replyFrame-{{id}}" 
+            src="https://port-0-fucking-m7oxoza4fc9682d2.sel4.cloudtype.app/Rep?AcceptId={{id}}" 
+            width="100%" 
+            style="border: none; display: none;" 
+            scrolling="yes">
+        </iframe>
+
+        <a href="https://port-0-fucking-m7oxoza4fc9682d2.sel4.cloudtype.app/Reply?AcceptId={{id}}">대댓 달기 </a>
     </div>
-    <iframe id="replyFrame" src="https://port-0-fucking-m7oxoza4fc9682d2.sel4.cloudtype.app/Rep?AcceptId={{id}}" width="100%" style="border: none;" onload="resizeIframe()" scrolling="yes"></iframe>
-    <a href="https://port-0-fucking-m7oxoza4fc9682d2.sel4.cloudtype.app/Reply?AcceptId={{id}}">대댓 달기 </a>
 {{/data2}}
+
 <a href="https://port-0-fucking-m7oxoza4fc9682d2.sel4.cloudtype.app/Comment?articleId={{ID}}">댓글 달기 </a>
+
 <script>
-  window.addEventListener("message", (event) => {
-    if (event.data.type === "resize" && event.data.height) {
-      document.getElementById("replyFrame").style.height = event.data.height + "px";
+    // iframe 사이즈 조절
+    window.addEventListener("message", (event) => {
+        if (event.data.type === "resize" && event.data.height && event.data.id) {
+            const frame = document.getElementById("replyFrame-" + event.data.id);
+            if (frame) {
+                frame.style.height = event.data.height + "px";
+            }
+        }
+    });
+
+    // 대댓글 iframe 보이기 토글 함수
+    function toggleReply(id) {
+        const iframe = document.getElementById("replyFrame-" + id);
+        if (iframe.style.display === "none") {
+            iframe.style.display = "block";
+        } else {
+            iframe.style.display = "none";
+        }
     }
-  });
-</script>
-<script>
-          // 5분마다 서버에 요청 보내기
-          setInterval(() => {
-            fetch('/session-ping', {
-              method: 'POST',
-              credentials: 'include'  // 세션 쿠키 포함
-            }).then(res => {
-              if (res.ok) {
+
+    // 세션 유지
+    setInterval(() => {
+        fetch('/session-ping', {
+            method: 'POST',
+            credentials: 'include'
+        }).then(res => {
+            if (res.ok) {
                 console.log("세션 연장 성공");
-              }
-              if (!res.ok) {
+            } else {
                 console.warn("세션 연장 실패");
-              }
-            }).catch(err => {
-              console.error("서버 연결 실패", err);
-            });
-          }, 5 * 60 * 1000); // 5분마다
+            }
+        }).catch(err => {
+            console.error("서버 연결 실패", err);
+        });
+    }, 5 * 60 * 1000);
 </script>
 </body>
 </html>

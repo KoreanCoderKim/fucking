@@ -40,7 +40,7 @@
 <body>
 {{#Data}}
     <div style="display: flex; align-items: center; gap: 10px;">
-        <a href="https://port-0-fucking-m7oxoza4fc9682d2.sel4.cloudtype.app/Inside?id={{id}}">{{usId}} | {{title}}</a>
+        <a href="https://port-0-fucking-m7oxoza4fc9682d2.sel4.cloudtype.app/Inside?id={{id}}&Page=1">{{usId}} | {{title}}</a>
         <form method="post" action="/delete">
             <input type="hidden" name="RoomId" value="{{roomId}}">  <!-- 이게 핵심 -->
             <button type="submit" name="deleteId" value="{{id}}">[게시물 삭제] </button>
@@ -76,3 +76,4 @@
     {{/Pager}}
 </footer>
 </html>
+

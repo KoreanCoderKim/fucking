@@ -112,11 +112,9 @@ public class ArticleController {
         else if (comment.size() <= 5) 
             comments = comment;
         else if (comment.size() < (Page - 1) * 5 + 10)
-            comments = comment.subList((Page - 1) * 5, (Page-1) * 5 + 10);
-        else if (comment.size() - 1 < (Page * 5) - 1)
             comments = comment.subList((Page - 1) * 5, comment.size());
         else
-            comments = comment.subList((Page - 1) * 5, Page * 5);
+            comments = comment.subList((Page - 1) * 5, (Page-1)*5+10);
         model.addAttribute("ID", id);
         model.addAttribute("data", article.get().getNews());
         model.addAttribute("data2",comments);

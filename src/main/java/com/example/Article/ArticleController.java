@@ -96,13 +96,15 @@ public class ArticleController {
     public String Inside(@RequestParam int Page, @RequestParam Long id, Model model) {
         Optional<Article> article = articleRepository.findById(id);
         List<Comment> comment = commentRepository.findByArticleId(id);
-        List<Integer> Number = List.of(1);
+        List<Integer> Number = new java.util.ArrayList<>(List.of());
         int sizer = 0;
         if (comment.size() <= 5)
             sizer = 1;
+        else if (comment.size() % 5 == 0) {
+            sizer = comment.size() / 5;
         else
             sizer = comment.size() / 5 + 1;
-        for (int i = 1; i < sizer; i++) {
+        for (int i = 1; i <= sizer; i++) {
             Number.add(i);
         }
         List<Comment> comments = List.of();

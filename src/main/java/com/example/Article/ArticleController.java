@@ -103,8 +103,6 @@ public class ArticleController {
         List<Comment> comments = List.of();
         if (comment.isEmpty())
             comments = List.of();
-        else if (comment.size() < (Page - 1) * 5 + 10)
-            comments = List.of();
         else if (comment.size() <= 5) 
             comments = comment;
         else if (comment.size() < (Page - 1) * 5 + 10)

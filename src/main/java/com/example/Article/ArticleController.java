@@ -96,8 +96,8 @@ public class ArticleController {
     public String Inside(@RequestParam int Page, @RequestParam Long id, Model model) {
         Optional<Article> article = articleRepository.findById(id);
         List<Comment> comment = commentRepository.findByArticleId(id);
-        List<Integer> Number = List.of(1);
-        for (int i = 2; i <= (comment.size() / 5); i++) {
+        List<Integer> Number = List.of();
+        for (int i = 1; i <= (comment.size() / 5); i++) {
             Number.add(i);
         }
         List<Comment> comments = List.of();

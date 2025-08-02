@@ -100,7 +100,7 @@ public class ArticleController {
         int sizer = 0;
         if (comment.size() <= 5)
             sizer = 1;
-        else if (comment.size() % 5 == 0) {
+        else if (comment.size() % 5 == 0)
             sizer = comment.size() / 5;
         else
             sizer = comment.size() / 5 + 1;

@@ -97,6 +97,8 @@ public class ArticleController {
         Optional<Article> article = articleRepository.findById(id);
         List<Comment> comment = commentRepository.findByArticleId(id);
         List<Integer> Number = List.of();
+        if (comment.size() <= 5)
+            Number.add(1);
         for (int i = 1; i <= (comment.size() / 5); i++) {
             Number.add(i);
         }

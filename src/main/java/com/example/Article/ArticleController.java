@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class ShowController {
+public class ArticleController {
     @Autowired
     private ArticleRepository articleRepository;
     @Autowired

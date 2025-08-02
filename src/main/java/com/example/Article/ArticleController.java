@@ -104,8 +104,16 @@ public class ArticleController {
                 Number.add(i);
             }
         }
-        List<Comment> comments;
-        if (comment.size() - 1 < (Page * 5) - 1 && comment.size() != 0)
+        List<Comment> comments = List.of();
+        if (comment.isEmpty())
+            comments = List.of();
+        else if (comment.size() < (Page - 1) * 5 + 10)
+            comments = List.of();
+        else if (comment.size() <= 5) 
+            comments = comment;
+        else if (comment.size() < (Page - 1) * 5 + 10)
+            comments = comment.subList((Page - 1) * 5, (Page-1) * 5 + 10);
+        else if (comment.size() - 1 < (Page * 5) - 1)
             comments = comment.subList((Page - 1) * 5, comment.size());
         else
             comments = comment.subList((Page - 1) * 5, Page * 5);

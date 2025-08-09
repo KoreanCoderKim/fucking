@@ -16,9 +16,7 @@ public class DeleteReply {
     public String DelRep(@RequestParam Long id) {
         Optional<Reply> comment = replyRepository.findById(id);
         if (comment.get().getisMode()) {
-            comment.get().updateRV("삭제된 답글");
-            comment.get().NotAcceptedReply();
-            replyRepository.save(new Reply(comment.get().getId(), comment.get().getCommentId(), comment.get().getUsName(), comment.get().getReplyValue(), comment.get().getisMode()));
+            commentRepository.deleteById(id);
             return "redirect:/Rep?AcceptId="+id;
         }
         else {
@@ -26,6 +24,7 @@ public class DeleteReply {
         }
     }
 }
+
 
 
 

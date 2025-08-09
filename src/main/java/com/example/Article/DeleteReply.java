@@ -19,11 +19,12 @@ public class DeleteReply {
             comment.get().updateRV("삭제된 답글");
             comment.get().NotAcceptedReply();
             replyRepository.save(new Reply(comment.get().getId(), comment.get().getCommentId(), comment.get().getUsName(), comment.get().getReplyValue(), comment.get().getisMode()));
-            return "redirect:/In";
+            return "redirect:/Inside?id={{id}}&Page=1";
         }
         else {
             return "redirect:/404";
         }
     }
 }
+
 

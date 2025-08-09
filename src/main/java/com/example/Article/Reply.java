@@ -22,6 +22,9 @@ public class Reply {
     public boolean getisMode() {
         return isMode;
     }
+    public void updateRV(String replyValue) {
+        this.replyValue = replyValue;
+    }
     public Reply(Long id, Long commentId, String usName, String replyValue, boolean isMode) {
         this.commentId = commentId;
         this.id = id;

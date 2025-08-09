@@ -36,5 +36,5 @@ public class ReplyDto {
                 '}';
     }
 
-    public Reply toEntity() { return new Reply(id, commentId, usName, replyValue); }
+    public Reply toEntity() { return new Reply(id, commentId, usName, replyValue, true); }
 }

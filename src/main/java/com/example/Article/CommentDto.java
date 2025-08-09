@@ -20,9 +20,6 @@ public class CommentDto {
     public void setArticleId(Long articleId) {
         this.articleId = articleId;
     }
-    public void updateCV(String commentValue) {
-        this.commentValue = commentValue;
-    }
     public CommentDto(String usName, String commentValue) {
         this.usName = usName;
         this.commentValue = commentValue;

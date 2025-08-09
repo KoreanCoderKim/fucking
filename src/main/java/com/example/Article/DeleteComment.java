@@ -16,9 +16,7 @@ public class DeleteComment {
     public String DelComm(@RequestParam Long id) {
         Optional<Comment> comment = commentRepository.findById(id);
         if (comment.get().getisMode()) {
-            comment.get().updateCV("삭제된 댓글");
-            comment.get().NotAcceptedReply();
-            commentRepository.save(new Comment(comment.get().getId(), comment.get().getArticleId(), comment.get().getUsName(), comment.get().getCommentValue(), comment.get().getisMode()));
+            commentRepository.deleteById(id);
             return "redirect:/Inside?id="+id+"&Page=1";
         }
         else {
@@ -26,6 +24,7 @@ public class DeleteComment {
         }
     }
 }
+
 
 
 

@@ -19,6 +19,9 @@ public class Reply {
     private String replyValue;
     @Column
     private boolean isMode = true;
+    public boolean getisMode() {
+        return isMode;
+    }
     public Reply(Long id, Long commentId, String usName, String replyValue) {
         this.commentId = commentId;
         this.id = id;

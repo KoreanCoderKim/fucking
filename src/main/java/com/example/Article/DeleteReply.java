@@ -16,7 +16,7 @@ public class DeleteReply {
     public String DelRep(@RequestParam Long id) {
         Optional<Reply> comment = replyRepository.findById(id);
         if (comment.get().getisMode()) {
-            commentRepository.deleteById(id);
+            replyRepository.deleteById(id);
             return "redirect:/Rep?AcceptId="+id;
         }
         else {
@@ -24,6 +24,7 @@ public class DeleteReply {
         }
     }
 }
+
 
 
 

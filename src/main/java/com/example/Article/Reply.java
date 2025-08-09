@@ -22,11 +22,12 @@ public class Reply {
     public boolean getisMode() {
         return isMode;
     }
-    public Reply(Long id, Long commentId, String usName, String replyValue) {
+    public Reply(Long id, Long commentId, String usName, String replyValue, boolean isMode) {
         this.commentId = commentId;
         this.id = id;
         this.replyValue = replyValue;
         this.usName = usName;
+        this.isMode = isMode;
     }
     public void setUsName(String usName) { this.usName=usName; }
     @Override

@@ -36,5 +36,5 @@ public class CommentDto {
                 '}';
     }
 
-    public Comment toEntity() { return new Comment(id, articleId, usName, commentValue); }
+    public Comment toEntity() { return new Comment(id, articleId, usName, commentValue, true); }
 }

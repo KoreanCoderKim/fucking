@@ -19,10 +19,11 @@ public class DeleteComment {
             comment.get().updateCV("삭제된 댓글");
             comment.get().NotAcceptedReply();
             commentRepository.save(new Comment(comment.get().getId(), comment.get().getArticleId(), comment.get().getUsName(), comment.get().getCommentValue(), comment.get().getisMode()));
+            return "redirect:/In";
         }
         else {
             return "redirect:/404";
         }
-        return "";
     }
 }
+

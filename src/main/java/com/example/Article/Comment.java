@@ -20,11 +20,12 @@ public class Comment {
     private String commentValue;
     @Column
     private boolean isMode = true;
-    public Comment(Long id, Long articleId, String usName, String commentValue) {
+    public Comment(Long id, Long articleId, String usName, String commentValue, boolean isMode) {
         this.articleId = articleId;
         this.id = id;
         this.commentValue = commentValue;
         this.usName = usName;
+        this.isMode = isMode;
     }
     public boolean getisMode() {
         return isMode;

@@ -26,6 +26,9 @@ public class Comment {
         this.commentValue = commentValue;
         this.usName = usName;
     }
+    public boolean getisMode() {
+        return isMode;
+    }
     public void setUsName(String usName) { this.usName = usName; }
     @Override
     public String toString() {

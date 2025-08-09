@@ -20,6 +20,9 @@ public class Comment {
     private String commentValue;
     @Column
     private boolean isMode = true;
+    public void updateCV(String commentValue) {
+        this.commentValue = commentValue;
+    }
     public Comment(Long id, Long articleId, String usName, String commentValue, boolean isMode) {
         this.articleId = articleId;
         this.id = id;

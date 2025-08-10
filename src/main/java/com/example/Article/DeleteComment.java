@@ -30,7 +30,7 @@ public class DeleteComment {
         else if (pwObj == null) {
             return "redirect:/Login?SessionState="+"SessionOut";
         }
-        if (comment.get().getUsname().equals((String) userObj)) {
+        if (comment.get().getUsName().equals((String) userObj)) {
             commentRepository.deleteById(id);
             return "redirect:/Inside?id="+id+"&Page=1";
         }
@@ -39,6 +39,7 @@ public class DeleteComment {
         }
     }
 }
+
 
 
 

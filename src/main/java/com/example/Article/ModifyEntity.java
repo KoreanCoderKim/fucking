@@ -16,6 +16,9 @@ public class ModifyEntity {
     @Column
     private String Value;
 
+    public void update(String Value) {
+        this.Value = Value;
+    }
     public ModifyEntity(Long id, String Value) {
         this.id = id;
         this.Value = Value;

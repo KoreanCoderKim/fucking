@@ -15,7 +15,22 @@ public class DeleteComment {
     @GetMapping("/DelComm")
     public String DelComm(@RequestParam Long id) {
         Optional<Comment> comment = commentRepository.findById(id);
-        if (comment.get().getisMode()) {
+        Object userObj = null;
+        Object pwObj = null;
+        try {
+            userObj = session.getAttribute("user");
+            pwObj = session.getAttribute("pw");
+        } catch (IllegalStateException e) {
+            return "redirect:/Login?SessionState="+"SessionOut";
+        }
+
+        if (userObj == null) {
+            return "redirect:/Login?SessionState="+"SessionOut";
+        }
+        else if (pwObj == null) {
+            return "redirect:/Login?SessionState="+"SessionOut";
+        }
+        if (comment.get().getUsname().equals((String) userObj)) {
             commentRepository.deleteById(id);
             return "redirect:/Inside?id="+id+"&Page=1";
         }
@@ -24,6 +39,7 @@ public class DeleteComment {
         }
     }
 }
+
 
 
 

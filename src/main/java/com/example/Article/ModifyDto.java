@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 
 import java.util.List;
 
+@Getter
 public class ModifyDto {
     @Id
     @GeneratedValue

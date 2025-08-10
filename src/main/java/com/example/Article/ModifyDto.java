@@ -12,12 +12,12 @@ public class ModifyDto {
     @GeneratedValue
     private Long id;
     @Column
-    private String Value;
-    public ModifyDto(String Value) {
-        this.Value = Value;
+    private String value;
+    public ModifyDto(String value) {
+        this.value = value;
     }
 
     public ModifyEntity toEntity() {
-        return new ModifyEntity(null, Value);
+        return new ModifyEntity(null, value);
     }
 }

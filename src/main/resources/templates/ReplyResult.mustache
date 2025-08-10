@@ -31,8 +31,14 @@
 {{#Repping}}
     <p>유저이름: {{usName}}</p>
     <p>대댓글 내용: {{replyValue}}</p>
-    <a href = "https://port-0-fucking-m7oxoza4fc9682d2.sel4.cloudtype.app/DelRep?id={{id}}">댓글 삭제</a>
-    <a href = "https://port-0-fucking-m7oxoza4fc9682d2.sel4.cloudtype.app/Change3?ModifyId={{id}}">댓글 수정</a>
+    <a href = "https://port-0-fucking-m7oxoza4fc9682d2.sel4.cloudtype.app/DelRep?AcceptId={{id}}">댓글 삭제</a>
+    <iframe 
+        id="replyFrame-{{id}}" 
+        src="https://port-0-fucking-m7oxoza4fc9682d2.sel4.cloudtype.app/Change3?ModifyId={{id}}"
+        width="100%" 
+        style="border: none; display: none;" 
+        scrolling="yes">
+    </iframe>
 {{/Repping}}
 <script>
       // 5분마다 서버에 요청 보내기

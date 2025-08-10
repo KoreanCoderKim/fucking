@@ -19,7 +19,7 @@ public class ModifyReply {
         model.addAttribute("MI",ModifyId);
         return "RCModify2";
     }
-    // 게시글 수정(PostMapping)
+    // 답변 수정(PostMapping)
     @PostMapping("/Modifying3")
     public String Modify3(ModifyDto form,@RequestParam Long ModifyId, HttpSession session) {
         Object userObj = null;

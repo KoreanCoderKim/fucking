@@ -15,7 +15,22 @@ public class DeleteReply {
     @GetMapping("/DelRep")
     public String DelRep(@RequestParam Long id) {
         Optional<Reply> comment = replyRepository.findById(id);
-        if (comment.get().getisMode()) {
+        Object userObj = null;
+        Object pwObj = null;
+        try {
+            userObj = session.getAttribute("user");
+            pwObj = session.getAttribute("pw");
+        } catch (IllegalStateException e) {
+            return "redirect:/Login?SessionState="+"SessionOut";
+        }
+
+        if (userObj == null) {
+            return "redirect:/Login?SessionState="+"SessionOut";
+        }
+        else if (pwObj == null) {
+            return "redirect:/Login?SessionState="+"SessionOut";
+        }
+        if (comment.get().getUsName().equals((String) userObj)) {
             replyRepository.deleteById(id);
             return "redirect:/Rep?AcceptId="+id;
         }
@@ -24,6 +39,7 @@ public class DeleteReply {
         }
     }
 }
+
 
 
 

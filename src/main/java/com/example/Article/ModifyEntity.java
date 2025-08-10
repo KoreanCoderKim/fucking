@@ -14,18 +14,18 @@ public class ModifyEntity {
     @GeneratedValue
     private Long id;
     @Column
-    private String Value;
+    private String value;
 
-    public ModifyEntity(Long id, String Value) {
+    public ModifyEntity(Long id, String value) {
         this.id = id;
-        this.Value = Value;
+        this.value = value;
     }
 
     @Override
     public String toString() {
         return "ModifyEntity{" +
                 ", id='" + id + '\'' +
-                ", Value=" + Value + '\'' +
+                ", value=" + value + '\'' +
                 '}';
     }
 }

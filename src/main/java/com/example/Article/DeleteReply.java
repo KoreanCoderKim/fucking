@@ -13,7 +13,7 @@ public class DeleteReply {
     ReplyRepository replyRepository;
 
     @GetMapping("/DelRep")
-    public String DelRep(@RequestParam Long id) {
+    public String DelRep(@RequestParam Long id, HttpSession session) {
         Optional<Reply> comment = replyRepository.findById(id);
         Object userObj = null;
         Object pwObj = null;
@@ -39,6 +39,7 @@ public class DeleteReply {
         }
     }
 }
+
 
 
 

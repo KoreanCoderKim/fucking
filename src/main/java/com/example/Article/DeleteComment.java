@@ -13,7 +13,7 @@ public class DeleteComment {
     CommentRepository commentRepository;
 
     @GetMapping("/DelComm")
-    public String DelComm(@RequestParam Long id) {
+    public String DelComm(@RequestParam Long id, HttpSession session) {
         Optional<Comment> comment = commentRepository.findById(id);
         Object userObj = null;
         Object pwObj = null;
@@ -39,6 +39,7 @@ public class DeleteComment {
         }
     }
 }
+
 
 
 

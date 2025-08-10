@@ -41,11 +41,12 @@ public class ModifyReply {
         if (now.get().getUsName().equals(userObj)) {
             now.get().updateRV(form.getValue());
             replyRepository.save(now.get());
-            return "redirect:/Rep?AcceptId="+ModifyId+"&Page=1";
+            return "redirect:/Rep?AcceptId="+ModifyId;
         }
         return "redirect:/404";
     }
 }
+
 
 
 

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
 
+@Controller
 public class ModifyReply {
     @Autowired
     ReplyRepository replyRepository;
@@ -45,3 +46,4 @@ public class ModifyReply {
         return "redirect:/404";
     }
 }
+

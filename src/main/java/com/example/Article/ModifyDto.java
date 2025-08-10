@@ -4,7 +4,7 @@ import com.example.Article.ArticleController;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-
+import lombok.Getter;
 import java.util.List;
 
 @Getter

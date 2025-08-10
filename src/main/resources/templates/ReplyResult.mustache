@@ -41,8 +41,26 @@
     </iframe>
 {{/Repping}}
 <script>
-      // 5분마다 서버에 요청 보내기
-      setInterval(() => {
+    window.addEventListener("message", (event) => {
+        if (event.data.type === "resize" && event.data.height && event.data.id) {
+            const frame = document.getElementById("replyFrame-" + event.data.id);
+            if (frame) {
+                frame.style.height = event.data.height + "px";
+            }
+        }
+    });
+    
+    // 대댓글 iframe 보이기 토글 함수
+    function toggleReply(id) {
+        const iframe = document.getElementById("replyFrame-" + id);
+        if (iframe.style.display === "none") {
+            iframe.style.display = "block";
+        } else {
+            iframe.style.display = "none";
+        }
+    }
+    // 5분마다 서버에 요청 보내기
+    setInterval(() => {
         fetch('/session-ping', {
           method: 'POST',
           credentials: 'include'  // 세션 쿠키 포함
@@ -56,7 +74,7 @@
         }).catch(err => {
           console.error("서버 연결 실패", err);
         });
-      }, 5 * 60 * 1000); // 5분마다
+    }, 5 * 60 * 1000); // 5분마다
 </script>
 </body>
 </html>

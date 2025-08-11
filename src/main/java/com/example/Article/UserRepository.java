@@ -6,11 +6,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Lock(LockModeType.PESSIMISTIC_READ)
     @Query("select a from User a where a.id = :id")
-    Article findByIdForUpdate(Long id);
+    User findByIdForUpdate(Long id);
     boolean existsByUsId(String usId);
 
     List<User> findByUsId(String usId);
 }
+
 

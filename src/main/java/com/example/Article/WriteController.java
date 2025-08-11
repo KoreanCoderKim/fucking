@@ -47,7 +47,25 @@ public class WriteController {
         String pww = (String) pwObj;
         Article article = form.toEntity(RoomId, (String) userObj, encoder.encode(pww));
         Article dummy = articleRepository.findByIdForUpdate(form.toEntity(RoomId, (String) userObj, encoder.encode(pww)).getId());
-        articleRepository.save(article);
+        int count = 0;
+        int maxRetries = 5;
+        while (count < maxRetries) {
+            try {
+                articleRepository.save(article);
+                break;
+            } catch (DataIntegrityViolationException e) {
+                count++;
+                if (count == maxRetries) {
+                    throw new RuntimeException("방 생성 실패 - 중복 또는 기타 문제");
+                }
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                    throw new RuntimeException("쓰레드 에레", ie);
+                }
+            }
+        }
         System.out.println(articleRepository.findAll());
         model.addAttribute("Id", RoomId);
         int PageValue = articleRepository.findByRoomId(RoomId).size()/5;
@@ -57,6 +75,7 @@ public class WriteController {
         return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue2;
     }
 }
+
 
 
 

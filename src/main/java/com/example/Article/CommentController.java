@@ -27,9 +27,25 @@ public class CommentController {
         form.setUsName((String) session.getAttribute("user"));
         form.setArticleId(aid);
         Comment comment = form.toEntity();
-        Comment dummy = commentRepository.findByIdForUpdate(aid);
-        System.out.println(dummy);
-        commentRepository.save(comment);
+        int count = 0;
+        int maxRetries = 5;
+        while (count < maxRetries) {
+            try {
+                commentRepository.save(comment);
+                break;
+            } catch (DataIntegrityViolationException e) {
+                count++;
+                if (count == maxRetries) {
+                    throw new RuntimeException("방 생성 실패 - 중복 또는 기타 문제");
+                }
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                    throw new RuntimeException("쓰레드 에레", ie);
+                }
+            }
+        }
         Optional<Article> article = articleRepository.findById(aid);
         String RoomId = article.get().getRoomId();
         return "redirect:index?RoomId="+RoomId+"&Page=1";

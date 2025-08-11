@@ -24,6 +24,7 @@ public class ModifyReply {
     @PostMapping("/Modifying3")
     public String Modify3(ModifyDto form,@RequestParam Long ModifyId, HttpSession session) {
         Reply dummy = replyRepository.findByIdForUpdate(ModifyId);
+        System.out.println(dummy);
         Object userObj = null;
         Object pwObj = null;
         try {
@@ -48,6 +49,7 @@ public class ModifyReply {
         return "redirect:/404";
     }
 }
+
 
 
 

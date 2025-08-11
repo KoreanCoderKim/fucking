@@ -24,9 +24,11 @@ public class UserController {
         }
         return "SignUp";
     }
+    @Transactional
     @PostMapping("/Board")
     public String ToBoard(UserDto form, Model model, HttpSession session) {
         String encodedPw;
+        User dummy = userRepository.findByIdForUpdate(form.toEntity().getId());
         // 중복 아이디 확인
         if (!userRepository.existsByUsId(form.toEntity().getUsId())) {
             try {
@@ -53,9 +55,11 @@ public class UserController {
         }
         return "Login";
     }
+    @Transactional
     @PostMapping("/Board2")
     public String ToList(UserDto form, Model model, HttpSession session) {
         String encodedPw;
+        User dummy = userRepository.findByIdForUpdate(form.toEntity().getId());
         // 체크인
         if (userRepository.existsByUsId(form.toEntity().getUsId())) {
             List<User> finder = userRepository.findByUsId(form.toEntity().getUsId());
@@ -77,3 +81,4 @@ public class UserController {
         return "redirect:/Login?SessionState=Good";
     }
 }
+

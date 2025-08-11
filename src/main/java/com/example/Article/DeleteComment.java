@@ -11,9 +11,11 @@ import java.util.Optional;
 public class DeleteComment {
     @Autowired
     CommentRepository commentRepository;
-
+    
+    @Transactional
     @GetMapping("/DelComm")
     public String DelComm(@RequestParam Long id, HttpSession session) {
+        Comment dummy = commentRepository.findByIdForUpdate(id);
         Optional<Comment> comment = commentRepository.findById(id);
         Object userObj = null;
         Object pwObj = null;
@@ -39,6 +41,7 @@ public class DeleteComment {
         }
     }
 }
+
 
 
 

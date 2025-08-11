@@ -25,8 +25,10 @@ public class ModifyController {
         }
     }
     // 게시글 수정(PostMapping)
+    @Transactional
     @PostMapping("/Modifying")
     public String Modify(ChanDto form,@RequestParam Long ModifyId, HttpSession session) {
+        Article dummy = articleRepository.findByIdForUpdate(ModifyId);
         Object userObj = null;
         Object pwObj = null;
         try {
@@ -60,3 +62,4 @@ public class ModifyController {
         return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue2;
     }
 }
+

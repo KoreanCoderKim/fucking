@@ -1,10 +1,14 @@
 package com.example.Article;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ReplyRepository extends CrudRepository<Reply, Long> {
+public interface ReplyRepository extends JpaRepository<Reply, Long> {
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("select a from Reply a where a.id = :id")
+    Article findByIdForUpdate(Long id);
     List<Reply> findByCommentId(Long commentId);
     List<Reply> findByUsName(String usName);
 }
+

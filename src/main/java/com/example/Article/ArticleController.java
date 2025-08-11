@@ -35,29 +35,15 @@ public class ArticleController {
     @Transactional
     @PostMapping("/Make")
     public String RoomMake(RoomDto form) {
-        int count = 0;
-        int maxRetries = 5;
-
-        if (!roomRepository.existsByRoomId(form.toEntity().getRoomId())) {
-            while (count < maxRetries) {
-                roomRepository.save(form.toEntity());
-                if (roomRepository.existsByRoomId(form.toEntity().getRoomId())) {
-                    break;
-                }
-                count++;
-                if (count == maxRetries) {
-                    return "";
-                }
-                try {
-                    Thread.sleep(1500);
-                } catch (InterruptedException ie) {
-                    Thread.currentThread().interrupt();
-                    return "";
-                }
-            }
-            return "idx";
+        if (roomRepository.existsByRoomId(form.toEntity().getRoomId())) {
+            return "redirect:/Made";
         }
-        System.out.println(articleRepository.findAll());
+        try {
+            roomRepository.save(form.toEntity());
+            return "idx";
+        } catch(DataIntegrityViolationException e) {
+             return "redirect:/Made";
+        }
         return "redirect:/Made";
     }
     // 방 입장(GetMapping)

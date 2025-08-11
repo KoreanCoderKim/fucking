@@ -28,6 +28,7 @@ public class CommentController {
         form.setArticleId(aid);
         Comment comment = form.toEntity();
         Comment dummy = commentRepository.findByIdForUpdate(aid);
+        System.out.println(dummy);
         commentRepository.save(comment);
         Optional<Article> article = articleRepository.findById(aid);
         String RoomId = article.get().getRoomId();

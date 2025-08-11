@@ -1,5 +1,5 @@
 package com.example.Article;
-
+import org.springframework.transaction.annotation.Transactional;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -48,6 +48,7 @@ public class ModifyReply {
         return "redirect:/404";
     }
 }
+
 
 
 

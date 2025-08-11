@@ -36,6 +36,7 @@ public class ArticleController {
     public String RoomMake(RoomDto form) {
         if (!roomRepository.existsByRoomId(form.toEntity().getRoomId())) {
             Room dummy = roomRepository.findByIdForUpdate(form.toEntity().getId());
+            System.out.println(dummy);
             roomRepository.save(form.toEntity());
             return "idx";
         }

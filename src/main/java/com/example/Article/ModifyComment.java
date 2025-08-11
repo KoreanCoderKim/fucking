@@ -25,6 +25,7 @@ public class ModifyComment {
     @PostMapping("/Modifying2")
     public String Modify2(ModifyDto form,@RequestParam Long ModifyId, HttpSession session) {
         Comment dummy = commentRepository.findByIdForUpdate(ModifyId);
+        System.out.println(dummy);
         Object userObj = null;
         Object pwObj = null;
         try {
@@ -50,4 +51,5 @@ public class ModifyComment {
     }
 
 }
+
 

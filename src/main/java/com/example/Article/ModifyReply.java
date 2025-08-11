@@ -20,8 +20,10 @@ public class ModifyReply {
         return "RCModify2";
     }
     // 답변 수정(PostMapping)
+    @Transactional
     @PostMapping("/Modifying3")
     public String Modify3(ModifyDto form,@RequestParam Long ModifyId, HttpSession session) {
+        Reply dummy = replyRepository.findByIdForUpdate(ModifyId);
         Object userObj = null;
         Object pwObj = null;
         try {
@@ -46,6 +48,7 @@ public class ModifyReply {
         return "redirect:/404";
     }
 }
+
 
 
 

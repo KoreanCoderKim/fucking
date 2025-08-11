@@ -34,6 +34,7 @@ public class ArticleController {
     @PostMapping("/Make")
     public String RoomMake(RoomDto form) {
         if (!roomRepository.existsByRoomId(form.toEntity().getRoomId())) {
+            Room dummy = roomRepository.findByIdForUpdate(form.toEntity().getId());
             roomRepository.save(form.toEntity());
             return "idx";
         }

@@ -29,6 +29,7 @@ public class ModifyController {
     @PostMapping("/Modifying")
     public String Modify(ChanDto form,@RequestParam Long ModifyId, HttpSession session) {
         Article dummy = articleRepository.findByIdForUpdate(ModifyId);
+        System.out.println(dummy);
         Object userObj = null;
         Object pwObj = null;
         try {
@@ -62,5 +63,6 @@ public class ModifyController {
         return "redirect:/index?RoomId="+form.getRoomId()+"&Page="+PageValue2;
     }
 }
+
 
 

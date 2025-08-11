@@ -36,13 +36,13 @@ public class ArticleController {
     @PostMapping("/Make")
     public String RoomMake(RoomDto form) {
         if (roomRepository.existsByRoomId(form.toEntity().getRoomId())) {
-            return "redirect:/Made";
+         return "redirect:/Made";
         }
         try {
-            roomRepository.save(form.toEntity());
-            return "idx";
+         roomRepository.save(form.toEntity());
+         return "idx";
         } catch(DataIntegrityViolationException e) {
-             return "redirect:/Made";
+         return "redirect:/Made";
         }
         return "redirect:/Made";
     }

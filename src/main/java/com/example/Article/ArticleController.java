@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import java.util.Optional;
 import java.lang.Thread;
+import org.springframework.dao.DataIntegrityViolationException;
 @Controller
 public class ArticleController {
     @Autowired

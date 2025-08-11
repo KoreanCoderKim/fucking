@@ -40,24 +40,21 @@ public class ArticleController {
 
         if (!roomRepository.existsByRoomId(form.toEntity().getRoomId())) {
             while (count < maxRetries) {
-                try {
-                    roomRepository.save(form.toEntity());
+                roomRepository.save(form.toEntity());
+                if (roomRepository.existsByRoomId(form.toEntity().getRoomId())) {
                     break;
-                } catch (DataIntegrityViolationException e) {
-                    count++;
-                    if (count == maxRetries) {
-                        return "";
-                    }
-                    try {
-                        Thread.sleep(1500);
-                    } catch (InterruptedException ie) {
-                        Thread.currentThread().interrupt();
-                        return "";
-                    }
+                }
+                count++;
+                if (count == maxRetries) {
+                    return "";
+                }
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                    return "";
                 }
             }
-        }
-        else {
             return "idx";
         }
         System.out.println(articleRepository.findAll());

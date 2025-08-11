@@ -1,5 +1,5 @@
 package com.example.Article;
-
+import java.lang.Thread;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,9 +24,28 @@ public class ReplyController {
         form.setUsName((String) session.getAttribute("user"));
         form.setCommentId(commentId);
         Reply reply = form.toEntity();
-        replyRepository.save(reply);
+        int count = 0;
+        int maxRetries = 5;
+        while (count < maxRetries) {
+            try {
+                replyRepository.save(reply);
+                break;
+            } catch (DataIntegrityViolationException e) {
+                count++;
+                if (count == maxRetries) {
+                    return "";
+                }
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                    return "";
+                }
+            }
+        }
         return "redirect:index?RoomId="+(String)session.getAttribute("Room")+"&Page=1";
     }
 }
+
 
 

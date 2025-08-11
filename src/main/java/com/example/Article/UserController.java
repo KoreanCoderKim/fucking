@@ -28,7 +28,6 @@ public class UserController {
     @PostMapping("/Board")
     public String ToBoard(UserDto form, Model model, HttpSession session) {
         String encodedPw;
-        User dummy = userRepository.findByIdForUpdate(form.toEntity().getId());
         // 중복 아이디 확인
         if (!userRepository.existsByUsId(form.toEntity().getUsId())) {
             try {
@@ -41,7 +40,25 @@ public class UserController {
             model.addAttribute("userId", form.toEntity().getUsId());
             User user = form.toEntity();
             user.setPassword(encodedPw);
-            userRepository.save(user);
+            int count = 0;
+            int maxRetries = 5;
+            while (count < maxRetries) {
+                try {
+                    userRepository.save(user);
+                    break;
+                } catch (DataIntegrityViolationException e) {
+                    count++;
+                    if (count == maxRetries) {
+                        throw new RuntimeException("방 생성 실패 - 중복 또는 기타 문제");
+                    }
+                    try {
+                        Thread.sleep(1500);
+                    } catch (InterruptedException ie) {
+                        Thread.currentThread().interrupt();
+                        throw new RuntimeException("쓰레드 에레", ie);
+                    }
+                }
+            }
             return "List";
         }
         return "redirect:/SignUp?SessionState=Good";
@@ -81,5 +98,6 @@ public class UserController {
         return "redirect:/Login?SessionState=Good";
     }
 }
+
 
 

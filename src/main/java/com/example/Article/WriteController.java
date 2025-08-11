@@ -1,5 +1,5 @@
 package com.example.Article;
-
+import java.lang.Thread;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +57,6 @@ public class WriteController {
         return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue2;
     }
 }
+
 
 

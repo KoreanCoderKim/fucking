@@ -35,16 +35,15 @@ public class ArticleController {
     @Transactional
     @PostMapping("/Make")
     public String RoomMake(RoomDto form) {
-        if (roomRepository.existsByRoomId(form.toEntity().getRoomId())) {
-         return "redirect:/Made";
-        }
-        try {
-         roomRepository.save(form.toEntity());
-         return "idx";
-        } catch(DataIntegrityViolationException e) {
-         return "redirect:/Made";
-        }
+      if (roomRepository.existsByRoomId(form.toEntity().getRoomId())) {
         return "redirect:/Made";
+      }
+      try {
+        roomRepository.save(form.toEntity());
+        return "idx";
+      } catch(DataIntegrityViolationException e) {
+        return "redirect:/Made";
+      }
     }
     // 방 입장(GetMapping)
     @GetMapping("/In")

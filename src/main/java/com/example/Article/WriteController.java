@@ -56,13 +56,13 @@ public class WriteController {
             } catch (DataIntegrityViolationException e) {
                 count++;
                 if (count == maxRetries) {
-                    throw new RuntimeException("방 생성 실패 - 중복 또는 기타 문제");
+                    return "";
                 }
                 try {
                     Thread.sleep(1500);
                 } catch (InterruptedException ie) {
                     Thread.currentThread().interrupt();
-                    throw new RuntimeException("쓰레드 에레", ie);
+                    return "";
                 }
             }
         }
@@ -75,6 +75,7 @@ public class WriteController {
         return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue2;
     }
 }
+
 
 
 

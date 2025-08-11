@@ -17,6 +17,7 @@ public class DeleteController {
     @PostMapping("/delete")
     public String deleted(@RequestParam Long deleteId, @RequestParam String RoomId, HttpSession session) {
         Article dummy = articleRepository.findByIdForUpdate(deleteId);
+        System.out.println(dummy);
         Optional<Article> article = articleRepository.findById(deleteId);
         if (!article.get().getIsMode()) {
             return "redirect:/In";

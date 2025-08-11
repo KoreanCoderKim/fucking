@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import java.util.Optional;
-
+import java.lang.Thread;
 @Controller
 public class ArticleController {
     @Autowired
@@ -34,10 +34,29 @@ public class ArticleController {
     @Transactional
     @PostMapping("/Make")
     public String RoomMake(RoomDto form) {
+        int count = 0;
+        int maxRetries = 5;
+
         if (!roomRepository.existsByRoomId(form.toEntity().getRoomId())) {
-            Room dummy = roomRepository.findByIdForUpdate(form.toEntity().getId());
-            System.out.println(dummy);
-            roomRepository.save(form.toEntity());
+            while (count < maxRetries) {
+                try {
+                    roomRepository.save(form.toEntity());
+                    break;
+                } catch (DataIntegrityViolationException e) {
+                    count++;
+                    if (count == maxRetries) {
+                        throw new RuntimeException("방 생성 실패 - 중복 또는 기타 문제");
+                    }
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException ie) {
+                        Thread.currentThread().interrupt();
+                        throw new RuntimeException("쓰레드 에레", ie);
+                    }
+                }
+            }
+        }
+        else {
             return "idx";
         }
         System.out.println(articleRepository.findAll());

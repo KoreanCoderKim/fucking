@@ -11,9 +11,10 @@ import java.util.Optional;
 public class DeleteReply {
     @Autowired
     ReplyRepository replyRepository;
-
+    @Transactional
     @GetMapping("/DelRep")
     public String DelRep(@RequestParam Long id, HttpSession session) {
+        Reply dummy = replyRepository.findByIdForUpdate(id);
         Optional<Reply> comment = replyRepository.findById(id);
         Object userObj = null;
         Object pwObj = null;
@@ -39,6 +40,7 @@ public class DeleteReply {
         }
     }
 }
+
 
 
 

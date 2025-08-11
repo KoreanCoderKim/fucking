@@ -13,8 +13,10 @@ public class DeleteController {
     @Autowired
     ArticleRepository articleRepository;
     // 게시글 삭제(PostMapping)
+    @Transactional
     @PostMapping("/delete")
     public String deleted(@RequestParam Long deleteId, @RequestParam String RoomId, HttpSession session) {
+        Article dummy = articleRepository.findByIdForUpdate(deleteId);
         Optional<Article> article = articleRepository.findById(deleteId);
         if (!article.get().getIsMode()) {
             return "redirect:/In";

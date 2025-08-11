@@ -17,8 +17,10 @@ public class ReplyController {
         model.addAttribute("Ci",AcceptId);
         return "Reply";
     }
+    @Transactional
     @PostMapping("/Replied")
     public String Replying(@RequestParam Long commentId, ReplyDto form, HttpSession session) {
+        Reply dummy = replyRepository.findByIdForUpdate(commentId);
         form.setUsName((String) session.getAttribute("user"));
         form.setCommentId(commentId);
         Reply reply = form.toEntity();
@@ -26,3 +28,4 @@ public class ReplyController {
         return "redirect:index?RoomId="+(String)session.getAttribute("Room")+"&Page=1";
     }
 }
+

@@ -19,10 +19,12 @@ public class UserDeleteController {
     private ReplyRepository replyRepository;
     @Autowired
     private CommentRepository commentRepository;
+    @Transactional
     @GetMapping("/DeleteUser")
     public String DeleteUser(HttpSession session) {
         Object usId = session.getAttribute("user");
         List<User> userdomain = userRepository.findByUsId((String) usId);
+        User dummy = userRepository.findByIdForUpdate(userdomain.get(0).getId());
         List<Article> article = articleRepository.findByUsId((String) usId);
         List<Comment> comment = commentRepository.findByUsName((String) usId);
         List<Reply> reply = replyRepository.findByUsName((String) usId);
@@ -44,3 +46,4 @@ public class UserDeleteController {
         return "redirect:/Main";
     }
 }
+

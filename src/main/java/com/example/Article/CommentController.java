@@ -27,25 +27,7 @@ public class CommentController {
         form.setUsName((String) session.getAttribute("user"));
         form.setArticleId(aid);
         Comment comment = form.toEntity();
-        int count = 0;
-        int maxRetries = 5;
-        while (count < maxRetries) {
-            try {
-                commentRepository.save(comment);
-                break;
-            } catch (DataIntegrityViolationException e) {
-                count++;
-                if (count == maxRetries) {
-                    return "";
-                }
-                try {
-                    Thread.sleep(1500);
-                } catch (InterruptedException ie) {
-                    Thread.currentThread().interrupt();
-                    return "";
-                }
-            }
-        }
+        commentRepository.save(comment);
         Optional<Article> article = articleRepository.findById(aid);
         String RoomId = article.get().getRoomId();
         return "redirect:index?RoomId="+RoomId+"&Page=1";

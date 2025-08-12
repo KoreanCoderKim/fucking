@@ -25,7 +25,6 @@ public class UserController {
         }
         return "SignUp";
     }
-    @Transactional
     @PostMapping("/Board")
     public String ToBoard(UserDto form, Model model, HttpSession session) {
         String encodedPw;
@@ -84,6 +83,7 @@ public class UserController {
         return "redirect:/Login?SessionState=Good";
     }
 }
+
 
 
 

@@ -27,26 +27,15 @@ public class ReplyController {
         Reply reply = form.toEntity();
         int count = 0;
         int maxRetries = 5;
-        while (count < maxRetries) {
-            try {
-                replyRepository.save(reply);
-                break;
-            } catch (DataIntegrityViolationException e) {
-                count++;
-                if (count == maxRetries) {
-                    return "";
-                }
-                try {
-                    Thread.sleep(1500);
-                } catch (InterruptedException ie) {
-                    Thread.currentThread().interrupt();
-                    return "";
-                }
-            }
+        try {
+            replyRepository.save(reply);
+            return "redirect:index?RoomId="+(String)session.getAttribute("Room")+"&Page=1";
+        } catch (DataIntegrityViolationException e) {
+            return "redirect:index?RoomId="+(String)session.getAttribute("Room")+"&Page=1";
         }
-        return "redirect:index?RoomId="+(String)session.getAttribute("Room")+"&Page=1";
     }
 }
+
 
 
 

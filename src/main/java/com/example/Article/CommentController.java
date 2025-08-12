@@ -21,7 +21,6 @@ public class CommentController {
         model.addAttribute("ai",articleId);
         return "Comment";
     }
-    @Transactional
     @PostMapping("/Commented")
     public String commneting(@RequestParam Long aid, CommentDto form, HttpSession session) {
         form.setUsName((String) session.getAttribute("user"));

@@ -27,7 +27,6 @@ public class WriteController {
         return "redirect:/In";
     }
     // 게시물 작성(PostMapping)
-    @Transactional
     @PostMapping("/RoomCommunity")
     public String OpenRoom(@RequestParam String RoomId, Model model, ArticleDto form, HttpSession session) {
         Object userObj = null;
@@ -57,6 +56,7 @@ public class WriteController {
         return "redirect:/index?RoomId="+RoomId+"&Page="+PageValue2;
     }
 }
+
 
 
 

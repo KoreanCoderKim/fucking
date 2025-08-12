@@ -32,7 +32,6 @@ public class ArticleController {
         return "sign";
     }
     // 방 생성(PostMapping)
-    @Transactional
     @PostMapping("/Make")
     public String RoomMake(RoomDto form) {
       boolean thow = false;

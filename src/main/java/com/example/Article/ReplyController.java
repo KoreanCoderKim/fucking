@@ -18,7 +18,6 @@ public class ReplyController {
         model.addAttribute("Ci",AcceptId);
         return "Reply";
     }
-    @Transactional
     @PostMapping("/Replied")
     public String Replying(@RequestParam Long commentId, ReplyDto form, HttpSession session) {
         Reply dummy = replyRepository.findByIdForUpdate(commentId);
@@ -35,6 +34,7 @@ public class ReplyController {
         }
     }
 }
+
 
 
 

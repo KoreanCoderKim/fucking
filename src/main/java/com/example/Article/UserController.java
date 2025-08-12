@@ -48,7 +48,6 @@ public class UserController {
         } catch (DataIntegrityViolationException e) {
             return "redirect:/SignUp?SessionState=Good";
         }
-        return "redirect:/SignUp?SessionState=Good";
     }
     @GetMapping("/Login")
     public String LoginMustache(@RequestParam String SessionState, Model model) {
@@ -85,6 +84,7 @@ public class UserController {
         return "redirect:/Login?SessionState=Good";
     }
 }
+
 
 
 

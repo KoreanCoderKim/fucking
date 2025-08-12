@@ -29,38 +29,24 @@ public class UserController {
     @PostMapping("/Board")
     public String ToBoard(UserDto form, Model model, HttpSession session) {
         String encodedPw;
-        // 중복 아이디 확인
-        if (!userRepository.existsByUsId(form.toEntity().getUsId())) {
-            try {
-                session.setAttribute("user",form.toEntity().getUsId());
-                encodedPw = encoder.encode(form.toEntity().getPassword());
-                session.setAttribute("pw",encodedPw);
-            } catch (IllegalStateException e) {
-                return "redirect:/SignUp?SessionState="+"SessionOut";
-            }
-            model.addAttribute("userId", form.toEntity().getUsId());
-            User user = form.toEntity();
-            user.setPassword(encodedPw);
-            int count = 0;
-            int maxRetries = 5;
-            while (count < maxRetries) {
-                try {
-                    userRepository.save(user);
-                    break;
-                } catch (DataIntegrityViolationException e) {
-                    count++;
-                    if (count == maxRetries) {
-                        return "";
-                    }
-                    try {
-                        Thread.sleep(1500);
-                    } catch (InterruptedException ie) {
-                        Thread.currentThread().interrupt();
-                        return "";
-                    }
-                }
-            }
+        if (userRepository.existsByUsId(form.toEntity().getUsId())) {
+            return "redirect:/SignUp?SessionState="+"Good";
+        }
+        try {
+            session.setAttribute("user",form.toEntity().getUsId());
+            encodedPw = encoder.encode(form.toEntity().getPassword());
+            session.setAttribute("pw",encodedPw);
+        } catch (IllegalStateException e) {
+            return "redirect:/SignUp?SessionState="+"SessionOut";
+        }
+        model.addAttribute("userId", form.toEntity().getUsId());
+        User user = form.toEntity();
+        user.setPassword(encodedPw);
+        try {
+            userRepository.save(user);
             return "List";
+        } catch (DataIntegrityViolationException e) {
+            return "redirect:/SignUp?SessionState=Good";
         }
         return "redirect:/SignUp?SessionState=Good";
     }
@@ -99,6 +85,7 @@ public class UserController {
         return "redirect:/Login?SessionState=Good";
     }
 }
+
 
 
 

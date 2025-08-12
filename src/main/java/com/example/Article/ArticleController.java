@@ -41,19 +41,10 @@ public class ArticleController {
       }
       try {
         roomRepository.save(form.toEntity());
+        return "idx";
       } catch(DataIntegrityViolationException e) {
-        thow = true;
+        return "redirect:/Made";
       }
-      if (thow) {
-          try {
-              Thread.sleep(1500);
-              roomRepository.save(form.toEntity());
-          }
-          catch(DataIntegrityViolationException e) {
-              return "redirect:/Made";
-          }
-      }
-      return "idx";
     }
     // 방 입장(GetMapping)
     @GetMapping("/In")

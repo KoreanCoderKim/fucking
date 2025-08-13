@@ -72,9 +72,6 @@ public class UserController {
                     return "redirect:/Login?SessionState="+"SessionOut";
                 }
                 model.addAttribute("userId", form.toEntity().getUsId());
-                User user = form.toEntity();
-                user.setPassword(encodedPw);
-                userRepository.save(user);
                 return "List";
             }
         }

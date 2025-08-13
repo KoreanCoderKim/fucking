@@ -28,9 +28,7 @@ public class UserController {
     @PostMapping("/Board")
     public String ToBoard(UserDto form, Model model, HttpSession session) {
         String encodedPw;
-        if (userRepository.existsByUsId(form.toEntity().getUsId())) {
-            return "redirect:/SignUp?SessionState="+"Good";
-        }
+        
         try {
             session.setAttribute("user",form.toEntity().getUsId());
             encodedPw = encoder.encode(form.toEntity().getPassword());

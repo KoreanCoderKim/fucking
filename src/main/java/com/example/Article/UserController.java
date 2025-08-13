@@ -46,11 +46,7 @@ public class UserController {
                 return "redirect:/SignUp?SessionState="+"Good";
             }
             userRepository.save(user);
-            if (userRepository.findByUsId(form.toEntity().getUsId()).size() == 1){
-               return "List";
-            }
-            userRepository.deleteById(form.toEntity().getId());
-            return "redirect:/SignUp?SessionState="+"Good";
+            return "List";
         } catch (DataIntegrityViolationException e) {
             return "redirect:/SignUp?SessionState=Good";
         }

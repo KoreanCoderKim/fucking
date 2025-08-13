@@ -42,8 +42,15 @@ public class UserController {
         User user = form.toEntity();
         user.setPassword(encodedPw);
         try {
+            if (userRepository.existsByUsId(form.toEntity().getUsId())) {
+                return "redirect:/SignUp?SessionState="+"Good";
+            }
             userRepository.save(user);
-            return "List";
+            if (userRepository.findByUsId(form.toEntity().getUsId()).size() == 1){
+               return "List";
+            }
+            userRepository.deleteById(form.toEntity().getId());
+            return "redirect:/SignUp?SessionState="+"Good";
         } catch (DataIntegrityViolationException e) {
             return "redirect:/SignUp?SessionState=Good";
         }

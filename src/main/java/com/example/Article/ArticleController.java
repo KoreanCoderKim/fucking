@@ -37,9 +37,7 @@ public class ArticleController {
       boolean thow = false;
      
       try {
-        if (roomRepository.existsByRoomId(form.toEntity().getRoomId())) {
-           return "redirect:/Made";
-        }
+        
         roomRepository.save(form.toEntity());
         return "idx";
       } catch(DataIntegrityViolationException e) {

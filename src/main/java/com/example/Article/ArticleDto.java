@@ -11,7 +11,7 @@ public class ArticleDto {
     @Id
     @GeneratedValue
     private Long id;
-    @Column
+    @Column(unique = true, nullable = false)
     private String roomId;
     @Column
     private String title;

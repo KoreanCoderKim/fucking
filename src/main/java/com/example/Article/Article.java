@@ -20,7 +20,7 @@ public class Article {
     private Long id;
     @Column
     private String usId;
-    @Column(unique = true, nullable = false)
+    @Column
     private String roomId;
     @Column
     private String password;

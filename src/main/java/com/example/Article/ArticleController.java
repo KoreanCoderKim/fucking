@@ -35,9 +35,7 @@ public class ArticleController {
     @PostMapping("/Make")
     public String RoomMake(RoomDto form) {
       boolean thow = false;
-      if (roomRepository.existsByRoomId(form.toEntity().getRoomId())) {
-        return "redirect:/Made";
-      }
+     
       try {
         if (roomRepository.existsByRoomId(form.toEntity().getRoomId())) {
            return "redirect:/Made";

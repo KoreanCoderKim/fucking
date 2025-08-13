@@ -43,11 +43,7 @@ public class ArticleController {
            return "redirect:/Made";
         }
         roomRepository.save(form.toEntity());
-        if (roomRepository.findByRoomId(form.toEntity().getRoomId()).size()==1) {
-           return "idx";
-        }
-        roomRepository.deleteById(form.toEntity().getId());
-        return "redirect:/Made";
+        return "idx";
       } catch(DataIntegrityViolationException e) {
         return "redirect:/Made";
       }

@@ -2,7 +2,7 @@ package com.example.Article;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.persistence.Table;
 import lombok.Setter;
 @Setter
@@ -11,7 +11,7 @@ public class UserDto {
     @Id
     @GeneratedValue
     private Long id;
-    @Column
+    @Column(unique = true, nullable = false)
     private String userId;
     @Column
     private String password;

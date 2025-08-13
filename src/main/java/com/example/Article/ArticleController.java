@@ -34,10 +34,7 @@ public class ArticleController {
     // 방 생성(PostMapping)
     @PostMapping("/Make")
     public String RoomMake(RoomDto form) {
-      boolean thow = false;
-     
       try {
-        
         roomRepository.save(form.toEntity());
         return "idx";
       } catch(DataIntegrityViolationException e) {

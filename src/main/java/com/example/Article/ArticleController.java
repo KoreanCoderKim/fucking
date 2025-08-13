@@ -39,8 +39,15 @@ public class ArticleController {
         return "redirect:/Made";
       }
       try {
+        if (roomRepository.existsByRoomId(form.toEntity().getRoomId())) {
+           return "redirect:/Made";
+        }
         roomRepository.save(form.toEntity());
-        return "idx";
+        if (roomRepository.findByRoomId(form.toEntity().getRoomId()).size()==1) {
+           return "idx";
+        }
+        roomRepository.deleteById(form.toEntity().getId());
+        return "redirect:/Made";
       } catch(DataIntegrityViolationException e) {
         return "redirect:/Made";
       }
